@@ -2,16 +2,108 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>{{ product.name }}</title>
+  <title>{{ product.name }} | Ao Eleven</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 400px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+
+    .product-card img:hover {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      color: #ff4500;
+      margin-bottom: 15px;
+    }
+
+    p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    .price {
+      font-size: 20px;
+      color: #2e8b57;
+      font-weight: bold;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background: #ff4500;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .back-link:hover {
+      background: #e03e00;
+    }
+
+    .rating {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+
+    .buy-btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #2e8b57;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .buy-btn:hover {
+      background: #256c46;
+    }
+  </style>
 </head>
 <body>
-  <h1>{{ product.name }}</h1>
-  <img src="{{ product.thumbnail }}" alt="{{ product.name }}" style="max-width:300px;">
-  <p><strong>Kategori:</strong> {{ product.get_category_display }}</p>
-  <p><strong>Harga:</strong> Rp {{ product.price|floatformat:0 }}</p>
-  <p><strong>Deskripsi:</strong> {{ product.description }}</p>
-  <p><strong>Stok:</strong> {{ product.stock }}</p>
-  <p><strong>Rating:</strong> ⭐ {{ product.rating }}</p>
-  <a href="/">⬅ Kembali</a>
+  <div class="product-card">
+    <h1>{{ product.name }}</h1>
+    <img src="{{ product.thumbnail }}" alt="{{ product.name }}">
+    <p><strong>Kategori:</strong> {{ product.get_category_display }}</p>
+    <p class="price">Rp {{ product.price|floatformat:0 }}</p>
+    <p><strong>Deskripsi:</strong> {{ product.description }}</p>
+    <p><strong>Stok:</strong> {{ product.stock }}</p>
+    <p class="rating">⭐ {{ product.rating }}</p>
+    <a href="/" class="back-link">⬅ Kembali</a>
+    <a href="/buy/{{ product.id }}" class="buy-btn">🛒 Beli Sekarang</a>
+  </div>
 </body>
 </html>
