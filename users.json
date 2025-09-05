@@ -16,5 +16,23 @@
     "groups": [],
     "user_permissions": []
   }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$sghj78iVX9Vz20smliFdNs$NDIzquk5nhXbiGRd346RimH05Yo9ICwPF6wnRS8EM00=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "Sirin",
+    "first_name": "",
+    "last_name": "",
+    "email": "hakimandi976@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-09-05T08:16:13.941Z",
+    "groups": [],
+    "user_permissions": []
+  }
 }
 ]
