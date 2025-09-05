@@ -5,11 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ app_name }}</title>
   <style>
+    /* Font import */
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto&display=swap');
+
     body {
-      font-family: "Segoe UI", system-ui, Arial, sans-serif;
+      font-family: 'Roboto', system-ui, Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #f9fafb;
+      background: #f0f4f8;
       color: #111827;
     }
 
@@ -17,17 +20,20 @@
       background: linear-gradient(135deg, #1e3a8a, #2563eb);
       color: white;
       padding: 32px 24px;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
       margin: 0;
-      font-size: 2.5rem;
-      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
 
     header p {
-      margin-top: 8px;
+      margin: 0;
       font-size: 1rem;
       opacity: 0.9;
     }
@@ -36,6 +42,14 @@
       padding: 32px 24px;
       max-width: 1100px;
       margin: auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      /* mozaik bola sederhana */
+      background-image: radial-gradient(circle, #e0f2fe 10%, transparent 10%), 
+                        radial-gradient(circle, #e0f2fe 10%, transparent 10%);
+      background-position: 0 0, 25px 25px;
+      background-size: 50px 50px;
     }
 
     h2 {
@@ -108,7 +122,7 @@
 
     .rating {
       font-size: 0.9rem;
-      color: #fbbf24; /* warna emas */
+      color: #fbbf24;
     }
 
     footer {
@@ -119,6 +133,7 @@
       color: #6b7280;
       border-top: 1px solid #e5e7eb;
     }
+
   </style>
 </head>
 <body>
