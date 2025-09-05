@@ -131,6 +131,9 @@
               <h3>{{ p.name }}</h3>
               <p class="price">Rp {{ p.price|floatformat:0 }}</p>
               <p class="desc">{{ p.description|truncatechars:80 }}</p>
+                {% if p.rating %}
+              <p class="rating">⭐ {{ p.rating }}/5</p>
+            {% endif %}
             </div>
           </article>
         {% endfor %}
