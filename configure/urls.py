@@ -3,10 +3,13 @@ from django.urls import path
 from main.views import home
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('product/<int:pk>/', views.product_detail, name='product_detail'),
 ]
 
 # untuk development: media
