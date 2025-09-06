@@ -61,8 +61,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'configure.wsgi.application'
 
-from decouple import config
-
 # Database configuration
 if PRODUCTION:
     # Production: gunakan PostgreSQL
