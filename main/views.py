@@ -7,10 +7,10 @@ def home(request):
         'app_name': 'Ao Eleven',  
         'student_name': 'Andi Hakim Himawan',
         'class_name': 'PBP D',
-        'featured': Product.objects.filter(is_featured=True)[:4],
+        # 'featured': Product.objects.filter(is_featured=True)[:4],
     }
     return render(request, 'main/home.html', confg)
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    return render(request, "main/product_detail.html", {"product": product})
+# def product_detail(request, pk):
+#     product = get_object_or_404(Product, pk=pk)
+#     return render(request, "main/product_detail.html", {"product": product})
