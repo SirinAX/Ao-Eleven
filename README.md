@@ -2,8 +2,8 @@
 # Ao Eleven ⚽✨
 
 Halo!  
-Ini adalah repositori untuk project **Ao Eleven**, sebuah aplikasi web sederhana bertemakan football shop berbasis Django.  
-Dibuat oleh **Andi Hakim Himawan** (NPM: 2406495792) dari kelas **PBP-D Fasilkom UI**.  
+Ini adalah repositori untuk project Ao Eleven, sebuah aplikasi web sederhana bertemakan football shop berbasis Django.  
+Dibuat oleh Andi Hakim Himawan (NPM: 2406495792) dari kelas PBP-D Fasilkom UI.  
 
 🔗 **Link Aplikasi:** https://andi-hakim42-aoeleven.pbp.cs.ui.ac.id/
 
@@ -12,12 +12,11 @@ Dibuat oleh **Andi Hakim Himawan** (NPM: 2406495792) dari kelas **PBP-D Fasilkom
 ## 🚀 Cara Deploy Secara Lokal
 
 Kalau mau jalanin project ini di komputer sendiri, ikuti langkah-langkah ini:
-
+````
 1. **Clone repository**
    ```bash
    git clone https://github.com/username/Ao-Eleven.git
    cd Ao-Eleven
-````
 
 2. **Buat virtual environment**
 
