@@ -112,7 +112,6 @@ Migrasi ini bikin database tetap sinkron sama kode yang ada.
 Makanya Django sering dipilih sebagai framework pertama buat belajar pengembangan web dan software.
 
 ---
----
 ## 📌 Ringkasan Alur Pengerjaan
 
 1. **Inisialisasi Project & App**
