@@ -3,8 +3,8 @@
 # Ao Eleven ⚽✨
 
 Halo!  
-Ini adalah repositori untuk project **Ao Eleven**, sebuah aplikasi web sederhana bertemakan **Football Shop** berbasis **Django**.  
-Project ini dibuat oleh **Andi Hakim Himawan** dari kelas **PBP-D Fasilkom UI** dengan **NPM: 2406495792**.  
+Ini adalah repositori untuk project Ao Eleven, sebuah aplikasi web sederhana bertemakan Football Shop berbasis Django.  
+Project ini dibuat oleh Andi Hakim Himawan dari kelas PBP-D Fasilkom UI dengan NPM: 2406495792.  
 
 🔗 **Link Aplikasi:** [Klik di sini untuk coba Ao Eleven](https://andi-hakim42-aoeleven.pbp.cs.ui.ac.id/)
 
@@ -120,7 +120,7 @@ Dengan migrasi, kita tidak perlu bikin tabel SQL manual — Django otomatis gene
 ## 🎯 Kenapa Django Dipilih?
 
 * **All-in-one**: sudah ada admin panel, autentikasi, ORM, templating, sampai proteksi keamanan.
-* **Cocok buat belajar**: konsep jelas tapi tetap powerful.
+* **Cocok buat belajar**: konsep jelas dan mudah dimengerti untuk pemula yang ingin belajar tentang web developement.
 * **DRY Principle**: kode lebih rapi dan gampang dirawat.
 * **Komunitas besar**: dokumentasi lengkap, banyak tutorial, gampang cari solusi.
 
