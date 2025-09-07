@@ -13,12 +13,13 @@ Project ini dibuat oleh **Andi Hakim Himawan** dari kelas **PBP-D Fasilkom UI** 
 ## 🚀 Cara Deploy Secara Lokal
 
 Kalau mau jalanin project ini di local komputer kamu, langkah-langkahnya:
+````
 
 1. **Clone repository**
    ```bash
    git clone https://github.com/username/Ao-Eleven.git
    cd Ao-Eleven
-````
+   ```
 
 2. **Buat dan aktifkan virtual environment**
 
