@@ -128,7 +128,6 @@ Makanya Django sering dipilih sebagai framework pertama buat belajar pengembanga
 
 4. **Membuat Views**
    - `home` untuk menampilkan daftar produk.
-   - `product_detail` untuk menampilkan detail tiap produk.
 
 5. **Routing**
    - Konfigurasi `urls.py` di project untuk include `main/urls.py`.
@@ -151,7 +150,6 @@ Makanya Django sering dipilih sebagai framework pertama buat belajar pengembanga
    - `TemplateDoesNotExist`: memindahkan template ke folder `main/templates/main/`.
    - `ImportError`: memperbaiki import di `urls.py`.
    - `gunicorn not found`: menambahkan `gunicorn` di `requirements.txt`.
-   - Error encoding: set `PYTHONUTF8=1` agar JSON dan file lainnya tersimpan dalam UTF-8.
 
 10. **Hasil Akhir**
     - Aplikasi berhasil di-deploy ke PWS.
