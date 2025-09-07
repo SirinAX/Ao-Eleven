@@ -1,11 +1,11 @@
 ````markdown
 # Ao Eleven ⚽✨
 
-Halo!  
+Halo👀!  
 Ini adalah repositori untuk project Ao Eleven, sebuah aplikasi web sederhana bertemakan football shop berbasis Django.  
 Dibuat oleh Andi Hakim Himawan (NPM: 2406495792) dari kelas PBP-D Fasilkom UI.  
 
-🔗 **Link Aplikasi:** https://andi-hakim42-aoeleven.pbp.cs.ui.ac.id/
+🔗 **Link Deployment:** https://andi-hakim42-aoeleven.pbp.cs.ui.ac.id/
 
 ---
 
@@ -104,7 +104,7 @@ Migrasi ini bikin database tetap sinkron sama kode yang ada.
 
 ## ❓ Kenapa Django Cocok Jadi Framework Pertama?
 
-* Django itu **“batteries included”** → banyak fitur penting udah ada (login, admin panel, keamanan).
+* Django itu *“batteries included”* → banyak fitur penting udah ada (login, admin panel, keamanan).
 * Dokumentasi jelas & komunitasnya besar.
 * Konsep MVC/MVT bikin gampang belajar alur aplikasi web.
 * Sangat relevan dipakai di industri, jadi ilmunya bisa langsung kepake.
@@ -112,5 +112,50 @@ Migrasi ini bikin database tetap sinkron sama kode yang ada.
 Makanya Django sering dipilih sebagai framework pertama buat belajar pengembangan web dan software.
 
 ```
+```
+## 📌 Ringkasan Alur Pengerjaan
 
+1. **Inisialisasi Project & App**
+   - Membuat project Django `AoEleven` dan app `main`.
+   - Setup virtual environment, install Django, dan commit awal ke Git.
 
+2. **Membuat Model**
+   - Menambahkan model `Product` di `main/models.py` dengan field seperti `name`, `price`, `description`, `thumbnail`, `category`, `stock`, `brand`, dan `rating`.
+   - Mendaftarkan app ke `INSTALLED_APPS` di `settings.py`.
+
+3. **Migrasi Database**
+   - Menjalankan `makemigrations` dan `migrate` agar Django otomatis membuat tabel sesuai model.
+
+4. **Membuat Views**
+   - `home` untuk menampilkan daftar produk.
+   - `product_detail` untuk menampilkan detail tiap produk.
+
+5. **Routing**
+   - Konfigurasi `urls.py` di project untuk include `main/urls.py`.
+   - Mapping URL ke views sesuai kebutuhan.
+
+6. **Membuat Template**
+   - Menyimpan HTML di `main/templates/main/`.
+   - Membuat `home.html` untuk daftar produk dan `product_detail.html` untuk detail produk.
+
+7. **Menambahkan Static Files**
+   - Setup `STATIC_URL` dan `STATIC_ROOT` di `settings.py`.
+   - Menggunakan `collectstatic` saat deploy agar CSS/JS bisa dipakai.
+
+8. **Deploy ke PWS**
+   - Membuat `requirements.txt` yang mencantumkan `Django` dan `gunicorn`.
+   - Membuat `Procfile` dengan perintah `gunicorn configure.wsgi:application`.
+   - Push repository ke PWS hingga build berjalan otomatis.
+
+9. **Mengatasi Masalah**
+   - `TemplateDoesNotExist`: memindahkan template ke folder `main/templates/main/`.
+   - `ImportError`: memperbaiki import di `urls.py`.
+   - `gunicorn not found`: menambahkan `gunicorn` di `requirements.txt`.
+   - Error encoding: set `PYTHONUTF8=1` agar JSON dan file lainnya tersimpan dalam UTF-8.
+
+10. **Hasil Akhir**
+    - Aplikasi berhasil di-deploy ke PWS.
+    - Halaman home menampilkan daftar produk.
+    - Detail produk bisa diakses melalui halaman khusus.
+
+```
