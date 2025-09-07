@@ -68,7 +68,7 @@ Kalau mau jalanin project ini di komputer sendiri, ikuti langkah-langkah ini:
 
 ## ⚙️ Peran `settings.py`
 
-File `settings.py` itu semacam **pusat konfigurasi** Django.
+File `settings.py` itu semacam pusat konfigurasinya Django.
 Isinya antara lain:
 
 * Info database (pakai SQLite, PostgreSQL, dll).
@@ -135,11 +135,10 @@ Makanya Django sering dipilih sebagai framework pertama buat belajar pengembanga
 
 6. **Membuat Template**
    - Menyimpan HTML di `main/templates/main/`.
-   - Membuat `home.html` untuk daftar produk dan `product_detail.html` untuk detail produk.
+   - Membuat `home.html` untuk daftar produk dan `product_detail.html` untuk detail produk.( fitur buat nanti)
 
 7. **Menambahkan Static Files**
    - Setup `STATIC_URL` dan `STATIC_ROOT` di `settings.py`.
-   - Menggunakan `collectstatic` saat deploy agar CSS/JS bisa dipakai.
 
 8. **Deploy ke PWS**
    - Membuat `requirements.txt` yang mencantumkan `Django` dan `gunicorn`.
@@ -153,7 +152,6 @@ Makanya Django sering dipilih sebagai framework pertama buat belajar pengembanga
 
 10. **Hasil Akhir**
     - Aplikasi berhasil di-deploy ke PWS.
-    - Halaman home menampilkan daftar produk.
-    - Detail produk bisa diakses melalui halaman khusus.
+    - Halaman home menampilkan daftar produk.(belum)
 
 ```
