@@ -1,50 +1,51 @@
-
-````markdown
 # Ao Eleven ⚽✨
 
-Halo!  
-Ini adalah repositori untuk project Ao Eleven, sebuah aplikasi web sederhana bertemakan Football Shop berbasis Django.  
-Project ini dibuat oleh Andi Hakim Himawan dari kelas PBP-D Fasilkom UI dengan NPM: 2406495792.  
+Halo👀!  
+Ini adalah repositori untuk project Ao Eleven, sebuah aplikasi web sederhana bertemakan football shop berbasis Django.  
+Dibuat oleh Andi Hakim Himawan (NPM: 2406495792) dari kelas PBP-D Fasilkom UI.  
 
-🔗 **Link Aplikasi:** [Klik di sini untuk coba Ao Eleven](https://andi-hakim42-aoeleven.pbp.cs.ui.ac.id/)
+🔗 Link Deployment:https://andi-hakim42-aoeleven.pbp.cs.ui.ac.id/
 
 ---
 
 ## 🚀 Cara Deploy Secara Lokal
 
-Kalau mau jalanin project ini di local komputer kamu, langkah-langkahnya:
-````
+Kalau mau jalanin project ini di komputer sendiri, ikuti langkah-langkah ini:
 
 1. **Clone repository**
    ```bash
    git clone https://github.com/username/Ao-Eleven.git
    cd Ao-Eleven
-   ```
 
-2. **Buat dan aktifkan virtual environment**
+2. **Buat virtual environment**
 
    ```bash
    python -m venv .venv
-   .venv\Scripts\activate      # Windows
-   source .venv/bin/activate   # Mac/Linux
    ```
 
-3. **Install dependencies**
+3. **Aktifkan virtual environment**
+
+   * Windows:
+
+     ```bash
+     .venv\Scripts\activate
+     ```
+   * Mac/Linux:
+
+     ```bash
+     source .venv/bin/activate
+     ```
+
+4. **Install dependencies**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Lakukan migrasi database**
+5. **Jalankan migrasi database**
 
    ```bash
    python manage.py migrate
-   ```
-
-5. **(Opsional) Buat superuser**
-
-   ```bash
-   python manage.py createsuperuser
    ```
 
 6. **Jalankan server**
@@ -53,7 +54,7 @@ Kalau mau jalanin project ini di local komputer kamu, langkah-langkahnya:
    python manage.py runserver
    ```
 
-7. **Akses aplikasi di browser**
+7. Buka browser dan akses:
 
    ```
    http://127.0.0.1:8000/
@@ -61,68 +62,85 @@ Kalau mau jalanin project ini di local komputer kamu, langkah-langkahnya:
 
 ---
 
-## 📌 Step-by-Step Implementasi
+## 📊 Bagan Alur Request & Response Django
+![yg bener](https://github.com/user-attachments/assets/cc488d9c-dbf9-43b7-8271-efd3655719b8)
 
-1. **Setup Project Django**
-
-   * Inisialisasi environment dan install Django.
-   * Buat project `AoEleven` dan aplikasi `main`.
-
-2. **Membuat Model**
-
-   * Tambah model `Product` di `main/models.py` untuk menyimpan data produk.
-   * Daftarkan `main` ke `INSTALLED_APPS` di `settings.py`.
-
-3. **Migrasi Database**
-
-   * Jalankan `makemigrations` lalu `migrate` untuk membuat tabel otomatis sesuai model.
-
-4. **Membuat Views & Template**
-
-   * `views.py` digunakan untuk ambil data dari model.
-   * Buat template HTML di folder `templates` untuk menampilkan data produk.
-
-5. **Mengatur URL**
-
-   * Di `urls.py`, mapping URL agar request dari user diarahkan ke views yang sesuai.
-
-6. **Deploy ke PWS**
-
-   * Push repo dengan `requirements.txt` dan `Procfile`.
-   * Hubungkan repo ke PWS, build otomatis jalan → aplikasi langsung online.
-
----
 
 ## ⚙️ Peran `settings.py`
-
-File ini pusat konfigurasi Django.
-Isinya antara lain:
-
-* `INSTALLED_APPS` → aplikasi yang digunakan.
-* `DATABASES` → konfigurasi database.
-* `TEMPLATES` → letak file HTML.
-* `STATICFILES_DIRS` → file statis (CSS, JS, gambar).
-* `SECRET_KEY` & `DEBUG` → keamanan & mode development.
+settings.py berfungsi sebagai pusat konfigurasi di Django. Di dalamnya terdapat pengaturan database, daftar aplikasi yang dipakai, middleware, hingga lokasi file statis dan template. Tanpa file ini, Django tidak akan tahu harus menggunakan database apa, aplikasi mana yang aktif, serta di mana mencari berkas HTML dan aset pendukung lainnya.
 
 ---
 
-## 🗂️ Cara Kerja Migrasi Database
+## 🗄️ Cara Kerja Migrasi Database di Django
 
-Migrasi adalah cara Django menyinkronkan **model Python** ke **database**:
+1. Kita bikin/ubah `models.py`.
+2. Jalankan:
 
-* `makemigrations` → bikin file perubahan (migration file).
-* `migrate` → eksekusi perubahan ke database.
+   ```bash
+   python manage.py makemigrations
+   ```
 
-Dengan migrasi, kita tidak perlu bikin tabel SQL manual — Django otomatis generate berdasarkan model.
+   → Django bikin file migrasi (instruksi perubahan database).
+3. Jalankan:
+
+   ```bash
+   python manage.py migrate
+   ```
+
+   → Django eksekusi instruksi itu ke database (buat tabel, ubah field, dll).
+
+Migrasi ini bikin database tetap sinkron sama kode yang ada.
 
 ---
 
-## 🎯 Kenapa Django Dipilih?
-
-* **All-in-one**: sudah ada admin panel, autentikasi, ORM, templating, sampai proteksi keamanan.
-* **Cocok buat belajar**: konsep jelas dan mudah dimengerti untuk pemula yang ingin belajar tentang web developement.
-* **DRY Principle**: kode lebih rapi dan gampang dirawat.
-* **Komunitas besar**: dokumentasi lengkap, banyak tutorial, gampang cari solusi.
+## ❓ Kenapa Django Cocok Jadi Framework Pertama?
+Django cocok dijadikan framework pertama karena sifatnya yang sudah lengkap sejak awal. Fitur penting seperti autentikasi, admin panel, dan keamanan sudah tersedia tanpa harus membangun dari nol. Dokumentasinya jelas dan komunitasnya luas, sehingga memudahkan proses belajar. Selain itu, dengan konsep MVT yang terstruktur, mahasiswa dapat memahami alur pengembangan web dengan lebih cepat, sekaligus mendapatkan pengalaman yang relevan untuk kebutuhan industri.
+Maka dari itu Django sering dipilih sebagai framework pertama buat belajar pengembangan web dan software.
 
 ---
+## Feedback untuk asisten dosen
+Pada saat sesi tutorial 1 di minggu ke-dua, asisten dosen sudah sangat baik dalam menjelaskan dan membantu mahasiswa saat ada masalah ketika mengerjakan tutorial 1. Jadi menurut saya sudah cukup baik.
 
+---
+## 📌 Ringkasan Alur Pengerjaan
+
+1. **Inisialisasi Project & App**
+   - Membuat project Django `AoEleven` dan app `main`.
+   - Setup virtual environment, install Django, dan commit awal ke Git.
+
+2. **Membuat Model**
+   - Menambahkan model `Product` di `main/models.py` dengan field seperti `name`, `price`, `description`, `thumbnail`, `category`, `stock`, `brand`, dan `rating`.
+   - Mendaftarkan app ke `INSTALLED_APPS` di `settings.py`.
+
+3. **Migrasi Database**
+   - Menjalankan `makemigrations` dan `migrate` agar Django otomatis membuat tabel sesuai model.
+
+4. **Membuat Views**
+   - `home` untuk menampilkan daftar produk.
+
+5. **Routing**
+   - Konfigurasi `urls.py` di project untuk include `main/urls.py`.
+   - Mapping URL ke views sesuai kebutuhan.
+
+6. **Membuat Template**
+   - Menyimpan HTML di `main/templates/main/`.
+   - Membuat `home.html` untuk menampilkan halaman utama dan daftar produk 
+
+7. **Menambahkan Static Files**
+   - Setup `STATIC_URL` dan `STATIC_ROOT` di `settings.py`.
+
+8. **Deploy ke PWS**
+   - Membuat `requirements.txt` yang mencantumkan `Django` dan `gunicorn`.
+   - Membuat `Procfile` dengan perintah `gunicorn configure.wsgi:application`.(Terjadi error dan saya mencari solusi)
+   - Push repository ke PWS hingga build berjalan otomatis.
+
+9. **Mengatasi Masalah**
+   - `TemplateDoesNotExist`: memindahkan template ke folder `main/templates/main/`.
+   - `ImportError`: memperbaiki import di `urls.py`.
+   - `gunicorn not found`: menambahkan `gunicorn` di `requirements.txt`.
+
+10. **Hasil Akhir**
+    - Aplikasi berhasil di-deploy ke PWS.
+    - Halaman home menampilkan daftar produk.(belum di tugas 2)
+
+---
