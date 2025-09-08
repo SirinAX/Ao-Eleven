@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ app_name }}</title>
+  
     <!-- Import Roboto dari Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
@@ -69,55 +70,6 @@
       text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }
 
-    /* ====== OPTIONAL STYLE (produk, grid, card) ====== */
-    /*
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .thumb {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-
-    .card-content {
-      padding: 16px;
-    }
-
-    .price {
-      font-weight: bold;
-      color: #2563eb;
-      margin: 8px 0;
-      font-size: 1rem;
-    }
-
-    .desc {
-      font-size: 0.9rem;
-      color: #4b5563;
-    }
-
-    .rating {
-      font-size: 0.9rem;
-      color: #fbbf24;
-    }
-    */
   </style>
 </head>
 <body>
@@ -131,32 +83,6 @@
     <h2>Selamat datang di {{ app_name }}!</h2>
     <p>Tempat terbaik untuk belanja perlengkapan sepak bola kamu.</p>
 
-    <!-- Produk unggulan -->
-         <!--
-    {# 
-    {% if featured %}
-      <h2>⚡ Produk Unggulan ⚡</h2>
-      <div class="grid">
-        {% for p in featured %}
-          <a href="{% url 'product_detail' p.pk %}" class="card">
-            <img class="thumb" src="{{ p.thumbnail }}" alt="{{ p.name }}" />
-            <div class="card-content">
-              <h3>{{ p.name }}</h3>
-              <p class="price">Rp {{ p.price|floatformat:0 }}</p>
-              <p class="desc">{{ p.description|truncatechars:80 }}</p>
-              {# rating opsional #}
-              {% if p.rating %}
-                <p class="rating">⭐ {{ p.rating }}/5</p>
-              {% endif %}
-            </div>
-          </a>
-        {% endfor %}
-      </div>
-    {% else %}
-      <p>Belum ada produk unggulan.</p>
-    {% endif %}
-    #}
-        -->
   </main>
     
   <footer>
