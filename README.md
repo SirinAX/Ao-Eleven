@@ -63,6 +63,7 @@ Kalau mau jalanin project ini di komputer sendiri, ikuti langkah-langkah ini:
 ---
 
 ## 📊 Bagan Alur Request & Response Django
+![yg bener](https://github.com/user-attachments/assets/cc488d9c-dbf9-43b7-8271-efd3655719b8)
 
 
 ## ⚙️ Peran `settings.py`
