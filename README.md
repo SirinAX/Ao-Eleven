@@ -67,16 +67,7 @@ Kalau mau jalanin project ini di komputer sendiri, ikuti langkah-langkah ini:
 
 
 ## ⚙️ Peran `settings.py`
-
-File `settings.py` itu semacam pusat konfigurasinya Django.
-Isinya antara lain:
-
-* Info database (pakai SQLite, PostgreSQL, dll).
-* Installed apps (app apa aja yang dipakai di project).
-* Middleware (alat bantu seperti keamanan & session).
-* Konfigurasi static file & template.
-
-Tanpa file ini, Django nggak tau harus connect ke database mana, app apa yang aktif, atau nyari template di folder mana.
+settings.py berfungsi sebagai pusat konfigurasi di Django. Di dalamnya terdapat pengaturan database, daftar aplikasi yang dipakai, middleware, hingga lokasi file statis dan template. Tanpa file ini, Django tidak akan tahu harus menggunakan database apa, aplikasi mana yang aktif, serta di mana mencari berkas HTML dan aset pendukung lainnya.
 
 ---
 
@@ -103,13 +94,12 @@ Migrasi ini bikin database tetap sinkron sama kode yang ada.
 ---
 
 ## ❓ Kenapa Django Cocok Jadi Framework Pertama?
+Django cocok dijadikan framework pertama karena sifatnya yang sudah lengkap sejak awal. Fitur penting seperti autentikasi, admin panel, dan keamanan sudah tersedia tanpa harus membangun dari nol. Dokumentasinya jelas dan komunitasnya luas, sehingga memudahkan proses belajar. Selain itu, dengan konsep MVT yang terstruktur, mahasiswa dapat memahami alur pengembangan web dengan lebih cepat, sekaligus mendapatkan pengalaman yang relevan untuk kebutuhan industri.
+Maka dari itu Django sering dipilih sebagai framework pertama buat belajar pengembangan web dan software.
 
-* Django itu *“batteries included”* → banyak fitur penting udah ada (login, admin panel, keamanan).
-* Dokumentasi jelas & komunitasnya besar.
-* Konsep MVC/MVT bikin gampang belajar alur aplikasi web.
-* Sangat relevan dipakai di industri, jadi ilmunya bisa langsung kepake.
-
-Makanya Django sering dipilih sebagai framework pertama buat belajar pengembangan web dan software.
+---
+## Feedback untuk asisten dosen
+Pada saat sesi tutorial 1 di minggu ke-dua, asisten dosen sudah sangat baik dalam menjelaskan dan membantu mahasiswa saat ada masalah ketika mengerjakan tutorial 1. Jadi menurut saya sudah cukup baik.
 
 ---
 ## 📌 Ringkasan Alur Pengerjaan
@@ -134,14 +124,14 @@ Makanya Django sering dipilih sebagai framework pertama buat belajar pengembanga
 
 6. **Membuat Template**
    - Menyimpan HTML di `main/templates/main/`.
-   - Membuat `home.html` untuk daftar produk dan `product_detail.html` untuk detail produk.( fitur buat nanti)
+   - Membuat `home.html` untuk menampilkan halaman utama dan daftar produk 
 
 7. **Menambahkan Static Files**
    - Setup `STATIC_URL` dan `STATIC_ROOT` di `settings.py`.
 
 8. **Deploy ke PWS**
    - Membuat `requirements.txt` yang mencantumkan `Django` dan `gunicorn`.
-   - Membuat `Procfile` dengan perintah `gunicorn configure.wsgi:application`.
+   - Membuat `Procfile` dengan perintah `gunicorn configure.wsgi:application`.(Terjadi error dan saya mencari solusi)
    - Push repository ke PWS hingga build berjalan otomatis.
 
 9. **Mengatasi Masalah**
@@ -151,6 +141,6 @@ Makanya Django sering dipilih sebagai framework pertama buat belajar pengembanga
 
 10. **Hasil Akhir**
     - Aplikasi berhasil di-deploy ke PWS.
-    - Halaman home menampilkan daftar produk.(belum)
+    - Halaman home menampilkan daftar produk.(belum di tugas 2)
 
 ---
