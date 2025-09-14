@@ -6,11 +6,11 @@ from .forms import ProductForm
 
 def home(request):
     products = Product.objects.all()
-    return render(request, "home.html", {"products": products})
+    return render(request, "main/home.html", {"products": products})
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    return render(request, "product_detail.html", {"product": product})
+    return render(request, "main/product_detail.html", {"product": product})
 
 def product_add(request):
     if request.method == "POST":
@@ -20,7 +20,7 @@ def product_add(request):
             return redirect("home")
     else:
         form = ProductForm()
-    return render(request, "add_product.html", {"form": form})
+    return render(request, "main/add_product.html", {"form": form})
 
 # --- JSON/XML Views ---
 def products_json(request):
