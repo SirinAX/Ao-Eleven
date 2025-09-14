@@ -1,8 +1,23 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}Home — {{ app_name }}{% endblock %}
+{% block title %}Home - {{ app_name }}{% endblock %}
 
 {% block content %}
-  <h2>Selamat datang di {{ app_name }}!</h2>
-  <p>Tempat terbaik untuk belanja perlengkapan sepak bola kamu.</p>
+  <h2>Daftar Produk</h2>
+
+  <ul>
+    {% for product in products %}
+      <li>
+        {{ product.name }} - {{ product.price }}
+        <a href="{% url 'main:show_detail' product.id %}">Detail</a>
+      </li>
+    {% empty %}
+      <li>Belum ada produk</li>
+    {% endfor %}
+  </ul>
+
+  <br>
+  <a href="{% url 'main:add_product' %}">
+    <button>➕ Add Product</button>
+  </a>
 {% endblock %}
