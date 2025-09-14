@@ -17,7 +17,7 @@ def product_add(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect("home")
+        return redirect("main:home")
     else:
         form = ProductForm()
     return render(request, "main/add_product.html", {"form": form})
