@@ -5,4 +5,10 @@
 <p>Nama: {{ product.name }}</p>
 <p>Harga: Rp{{ product.price }}</p>
 <p>Deskripsi: {{ product.description }}</p>
+
+{% if product.thumbnail %}
+  <img src="{{ product.thumbnail }}" alt="{{ product.name }}" width="300">
+{% else %}
+  <p><i>Tidak ada gambar</i></p>
+{% endif %}
 {% endblock %}

@@ -8,8 +8,14 @@
   <ul>
     {% for product in products %}
       <li>
-        {{ product.name }} - {{ product.price }}
-        <a href="{% url 'main:show_detail' product.id %}">Detail</a>
+        <h3>{{ product.name }} - Rp{{ product.price }}</h3>
+        {% if product.thumbnail %}
+          <img src="{{ product.thumbnail }}" alt="{{ product.name }}" width="150">
+        {% else %}
+          <p><i>Tidak ada gambar</i></p>
+        {% endif %}
+        <br>
+        <a href="{% url 'main:product_detail' product.id %}">Detail</a>
       </li>
     {% empty %}
       <li>Belum ada produk</li>
@@ -17,7 +23,7 @@
   </ul>
 
   <br>
-  <a href="{% url 'main:add_product' %}">
+  <a href="{% url 'main:product_add' %}">
     <button>➕ Add Product</button>
   </a>
 {% endblock %}

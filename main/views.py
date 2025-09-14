@@ -4,23 +4,41 @@ from django.core import serializers
 from .models import Product
 from .forms import ProductForm
 
+APP_NAME = "Ao Eleven"
+STUDENT_NAME = "Andi Hakim Himawan"
+
 def home(request):
     products = Product.objects.all()
-    return render(request, "main/home.html", {"products": products})
+    context = {
+        "products": products,
+        "app_name": APP_NAME,
+        "student_name": STUDENT_NAME,
+    }
+    return render(request, "main/home.html", context)
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    return render(request, "main/product_detail.html", {"product": product})
+    context = {
+        "product": product,
+        "app_name": APP_NAME,
+        "student_name": STUDENT_NAME,
+    }
+    return render(request, "main/product_detail.html", context)
 
 def product_add(request):
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-        return redirect("main:home")
+            return redirect("home")
     else:
         form = ProductForm()
-    return render(request, "main/add_product.html", {"form": form})
+    context = {
+        "form": form,
+        "app_name": APP_NAME,
+        "student_name": STUDENT_NAME,
+    }
+    return render(request, "main/add_product.html", context)
 
 # --- JSON/XML Views ---
 def products_json(request):
