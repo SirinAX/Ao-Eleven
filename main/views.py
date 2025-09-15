@@ -40,17 +40,22 @@ def product_add(request):
     }
     return render(request, "main/add_product.html", context)
 
-def product_delete(request, pk):
+def product_confirm_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    if request.method == "POST":  
-        product.delete()
-        return redirect("main:home")  
     context = {
         "product": product,
         "app_name": APP_NAME,
         "student_name": STUDENT_NAME,
     }
     return render(request, "main/product_confirm_delete.html", context)
+
+def product_delete(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == "POST":
+        product.delete()
+        return redirect("main:home")
+    # Jika request bukan POST, redirect ke detail produk
+    return redirect("main:product_detail", pk=pk)
 
 # --- JSON/XML Views ---
 def products_json(request):

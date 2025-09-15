@@ -11,9 +11,7 @@
 {% else %}
   <p><i>Tidak ada gambar</i></p>
 {% endif %}
-<form method="POST" action="{% url 'main:product_delete' product.pk %}">
-    {% csrf_token %}
-    <button type="submit">Hapus Produk</button>
-</form>
-
+<a href="{% url 'main:product_confirm_delete' product.pk %}">
+    <button type="button" style="background-color:red; color:white;">Hapus Produk</button>
+</a>
 {% endblock %}

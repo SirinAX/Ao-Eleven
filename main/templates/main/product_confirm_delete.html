@@ -1,7 +1,22 @@
-<h2>Yakin mau hapus produk "{{ product.name }}"?</h2>
+{% extends 'base.html' %}
 
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit">Ya, Hapus</button>
-    <a href="{% url 'main:product_detail' product.pk %}">Batal</a>
-</form>
+{% block content %}
+<div style="text-align: center; margin-top: 50px;">
+    <h2>Yakin mau hapus produk "<span style="color: #333;">{{ product.name }}</span>"?</h2>
+
+    <form method="POST" action="{% url 'main:product_delete' product.pk %}" style="margin-top: 30px;">
+        {% csrf_token %}
+        <button type="submit" 
+                style="background-color: red; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;">
+            Ya, Hapus
+        </button>
+        <a href="{% url 'main:product_detail' product.pk %}" 
+           style="margin-left: 15px; text-decoration: none;">
+            <button type="button" 
+                    style="background-color: gray; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;">
+                Batal
+            </button>
+        </a>
+    </form>
+</div>
+{% endblock %}
