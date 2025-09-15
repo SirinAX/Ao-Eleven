@@ -40,6 +40,18 @@ def product_add(request):
     }
     return render(request, "main/add_product.html", context)
 
+def product_delete(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == "POST":  
+        product.delete()
+        return redirect("main:home")  
+    context = {
+        "product": product,
+        "app_name": APP_NAME,
+        "student_name": STUDENT_NAME,
+    }
+    return render(request, "main/product_confirm_delete.html", context)
+
 # --- JSON/XML Views ---
 def products_json(request):
     data = serializers.serialize("json", Product.objects.all())
