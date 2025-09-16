@@ -98,7 +98,7 @@ Django cocok dijadikan framework pertama karena sifatnya yang sudah lengkap seja
 Maka dari itu Django sering dipilih sebagai framework pertama buat belajar pengembangan web dan software.
 
 ---
-## Feedback untuk asisten dosen
+## Feedback untuk asisten dosen Tutorial 1
 Pada saat sesi tutorial 1 di minggu ke-dua, asisten dosen sudah sangat baik dalam menjelaskan dan membantu mahasiswa saat ada masalah ketika mengerjakan tutorial 1. Jadi menurut saya sudah cukup baik.
 
 ---
