@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.core import serializers
 from .models import Product
 from .forms import ProductForm
+from .models import Employee
 
 APP_NAME = "Ao Eleven"
 STUDENT_NAME = "Andi Hakim Himawan"
@@ -75,3 +76,9 @@ def product_xml(request, pk):
     product = get_object_or_404(Product, pk=pk)
     data = serializers.serialize("xml", [product])
     return HttpResponse(data, content_type="application/xml")
+
+def add_employee(request):
+    pegw = Employee.objects.create(name = "Andi Hakim Himawan",
+                                   age = 18,
+                                   persona = "aku wibu akut")
+    return HttpResponse(f"Employee berhasil ditambahkan!: {pegw.name},umur: {pegw.age},Persona: {pegw.persona}")

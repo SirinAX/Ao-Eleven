@@ -9,8 +9,7 @@ urlpatterns = [
     path('products/<int:pk>/', views.product_detail, name='product_detail'),
     path('products/<int:pk>/delete/', views.product_delete, name='product_delete'),
     path('product/<int:pk>/confirm_delete/', views.product_confirm_delete, name='product_confirm_delete'),
-
-
+    path('add-employee/',views.add_employee,name = 'add_employee'),
 
     # Export JSON/XML
     path('products/json/', views.products_json, name='products_json'),
