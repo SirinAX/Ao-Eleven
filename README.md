@@ -1,7 +1,7 @@
 # Ao Eleven ⚽✨
 
 Halo👀!  
-Ini adalah repositori untuk project Ao Eleven, sebuah aplikasi web sederhana bertemakan football shop berbasis Django.  
+Ini adalah repositori untuk project Ao Eleven, sebuah aplikasi web bertemakan football shop berbasis Django.  
 Dibuat oleh Andi Hakim Himawan (NPM: 2406495792) dari kelas PBP-D Fasilkom UI.  
 
 🔗 Link Deployment:https://andi-hakim42-aoeleven.pbp.cs.ui.ac.id/
@@ -61,7 +61,8 @@ Kalau mau jalanin project ini di komputer sendiri, ikuti langkah-langkah ini:
    ```
 
 ---
-
+# TUGAS 2 - Implementasi Model-View-Template (MVT) pada Django
+---
 ## 📊 Bagan Alur Request & Response Django
 ![yg bener](https://github.com/user-attachments/assets/cc488d9c-dbf9-43b7-8271-efd3655719b8)
 
@@ -142,5 +143,9 @@ Pada saat sesi tutorial 1 di minggu ke-dua, asisten dosen sudah sangat baik dala
 10. **Hasil Akhir**
     - Aplikasi berhasil di-deploy ke PWS.
     - Halaman home menampilkan daftar produk.(belum di tugas 2)
+
+---
+
+# TUGAS 3 - Implementasi Form dan Data Delivery pada Django
 
 ---
