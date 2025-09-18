@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Product(models.Model):
@@ -21,7 +22,8 @@ class Product(models.Model):
     brand = models.CharField(max_length=50, blank=True)
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    # Menghubungkan User dengan product
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="products")
     def __str__(self):
         return self.name
 

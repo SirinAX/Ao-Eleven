@@ -1,84 +1,142 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.core import serializers
-from .models import Product
+from .models import Product, Employee
 from .forms import ProductForm
-from .models import Employee
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+import datetime
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
-APP_NAME = "Ao Eleven"
-STUDENT_NAME = "Andi Hakim Himawan"
 
+@login_required(login_url='/login')
 def home(request):
-    products = Product.objects.all()
+    filter_type = request.GET.get("filter", "all")
+
+    if filter_type == "all":
+        products = Product.objects.all()
+    else:
+        products = Product.objects.filter(owner=request.user)
+
     context = {
         "products": products,
-        "app_name": APP_NAME,
-        "student_name": STUDENT_NAME,
+        "last_login": request.COOKIES.get("last_login", "Never"),
     }
     return render(request, "main/home.html", context)
 
+
+@login_required(login_url='/login')
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     context = {
         "product": product,
-        "app_name": APP_NAME,
-        "student_name": STUDENT_NAME,
     }
     return render(request, "main/product_detail.html", context)
 
+
+@login_required(login_url='/login')
 def product_add(request):
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            product = form.save(commit=False)
+            product.owner = request.user
+            product.save()
             return redirect("main:home")
     else:
         form = ProductForm()
+    
     context = {
         "form": form,
-        "app_name": APP_NAME,
-        "student_name": STUDENT_NAME,
     }
     return render(request, "main/add_product.html", context)
+
 
 def product_confirm_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     context = {
         "product": product,
-        "app_name": APP_NAME,
-        "student_name": STUDENT_NAME,
     }
     return render(request, "main/product_confirm_delete.html", context)
+
 
 def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == "POST":
         product.delete()
         return redirect("main:home")
-    # Jika request bukan POST, redirect ke detail produk
     return redirect("main:product_detail", pk=pk)
+
 
 # --- JSON/XML Views ---
 def products_json(request):
     data = serializers.serialize("json", Product.objects.all())
     return HttpResponse(data, content_type="application/json")
 
+
 def products_xml(request):
     data = serializers.serialize("xml", Product.objects.all())
     return HttpResponse(data, content_type="application/xml")
+
 
 def product_json(request, pk):
     product = get_object_or_404(Product, pk=pk)
     data = serializers.serialize("json", [product])
     return HttpResponse(data, content_type="application/json")
 
+
 def product_xml(request, pk):
     product = get_object_or_404(Product, pk=pk)
     data = serializers.serialize("xml", [product])
     return HttpResponse(data, content_type="application/xml")
 
+
 def add_employee(request):
-    pegw = Employee.objects.create(name = "Andi Hakim Himawan",
-                                   age = 18,
-                                   persona = "aku wibu akut")
-    return HttpResponse(f"Employee berhasil ditambahkan!: {pegw.name},umur: {pegw.age},Persona: {pegw.persona}")
+    pegw = Employee.objects.create(
+        name="Andi Hakim Himawan",
+        age=18,
+        persona="aku wibu akut"
+    )
+    return HttpResponse(
+        f"Employee berhasil ditambahkan!: {pegw.name}, umur: {pegw.age}, Persona: {pegw.persona}"
+    )
+
+
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {"form": form}
+    return render(request, "main/register.html", context)
+
+
+def login_user(request):
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            response = HttpResponseRedirect(reverse("main:home"))
+            response.set_cookie("last_login", str(datetime.datetime.now()))
+            return response
+    else:
+        form = AuthenticationForm(request)
+
+    context = {"form": form}
+    return render(request, "main/login.html", context)
+
+
+def logout_user(request):
+    logout(request)
+    response = HttpResponseRedirect(reverse("main:login"))
+    response.delete_cookie("last_login")
+    return response

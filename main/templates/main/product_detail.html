@@ -14,4 +14,11 @@
 <a href="{% url 'main:product_confirm_delete' product.pk %}">
     <button type="button" style="background-color:red; color:white;">Hapus Produk</button>
 </a>
+
+{% if product.user %}
+    <p>Author: {{ product.user.username }}</p>
+{% else %}
+    <p>Author: Anonymous</p>
+{% endif %}
+
 {% endblock %}

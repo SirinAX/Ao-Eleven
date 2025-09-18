@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from main.views import register,login_user,logout_user
 
 app_name = "main"
 
@@ -10,6 +11,9 @@ urlpatterns = [
     path('products/<int:pk>/delete/', views.product_delete, name='product_delete'),
     path('product/<int:pk>/confirm_delete/', views.product_confirm_delete, name='product_confirm_delete'),
     path('add-employee/',views.add_employee,name = 'add_employee'),
+    path('register/', register, name='register'),
+    path('login/', login_user, name='login'),
+    path('logout/', logout_user, name='logout'),
 
     # Export JSON/XML
     path('products/json/', views.products_json, name='products_json'),
