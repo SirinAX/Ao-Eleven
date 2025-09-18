@@ -228,13 +228,7 @@ Berikut hasil akses URL dengan Postman:
    * Saya juga menambahkan opsi untuk menghapus produk melalui tombol **"Delete"** yang akan mengarahkan ke halaman konfirmasi.
    * Halaman ini juga extends dari `base.html`.
 
-6. **Membuat Halaman Konfirmasi Delete (`product_confirm_delete.html`)**
-
-   * Halaman ini berfungsi untuk menampilkan pesan konfirmasi sebelum data produk benar-benar dihapus.
-   * User akan diberikan dua opsi, yaitu **"Ya, Hapus"** untuk menghapus data atau **"Batal"** untuk kembali ke halaman detail.
-   * Halaman ini juga extends dari `base.html`.
-
-7. **Menambahkan Fungsi Views untuk JSON dan XML**
+6. **Menambahkan Fungsi Views untuk JSON dan XML**
 
    * Saya menambahkan empat fungsi baru di `views.py`:
 
@@ -244,7 +238,7 @@ Berikut hasil akses URL dengan Postman:
      * `product_xml` → menampilkan detail satu produk berdasarkan ID dalam format XML.
    * Fungsi ini menggunakan serializer bawaan Django untuk mengubah queryset ke dalam format JSON/XML.
 
-8. **Menambahkan Routing URL di `urls.py`**
+7. **Menambahkan Routing URL di `urls.py`**
 
    * Saya menambahkan path baru untuk mengakses data dalam format JSON dan XML, baik untuk semua produk maupun produk berdasarkan ID.
    * Contoh:
