@@ -255,4 +255,115 @@ Dengan langkah-langkah tersebut, aplikasi dapat menampilkan data produk dalam be
 
 Pada saat sesi tutorial 2, saya pribadi tidak mengalami masalah. Penjelasan asisten dosen sudah jelas dan alurnya mudah diikuti, sehingga saya bisa memahami materi serta menyelesaikan tugas dengan lancar.
 
+---
+
+# TUGAS 4 - Implementasi Autentikasi, Session, dan Cookies pada Django
+
+---
+
+## ❓ Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya !
+`AuthenticationForm` adalah form bawaan Django yang digunakan untuk proses **login** pengguna. Form ini secara otomatis menyediakan field **username** dan **password**, serta melakukan validasi apakah pasangan kredensial tersebut sesuai dengan data di basis data pengguna (`User model`).
+
+**Kelebihan:**
+- Sudah terintegrasi dengan sistem autentikasi Django sehingga aman dan minim konfigurasi.
+- Menangani validasi login secara otomatis, termasuk pengecekan akun yang tidak aktif.
+- Mudah digunakan karena hanya perlu di-*import* dan dirender di template.
+
+**Kekurangan:**
+- Terbatas pada field username dan password (perlu kustomisasi jika ingin login dengan email atau multi-field).
+- Tampilan default sederhana, sehingga biasanya perlu ditambahkan styling sesuai kebutuhan aplikasi.
+
+---
+## 2. 🔑 Perbedaan Autentikasi dan Otorisasi
+
+- **Autentikasi (Authentication)**: Proses verifikasi identitas pengguna.  
+  📌 Contoh: memastikan bahwa pengguna benar-benar “Andi” dengan memeriksa username dan password.
+
+- **Otorisasi (Authorization)**: Proses pemberian hak akses setelah identitas diverifikasi.  
+  📌 Contoh: setelah login, hanya admin yang boleh mengakses halaman dashboard tertentu.
+
+**Implementasi di Django:**
+- ✅ **Autentikasi**:  
+  Django menyediakan `django.contrib.auth`, termasuk fungsi `authenticate()` dan `login()` untuk memverifikasi identitas.
+- ✅ **Otorisasi**:  
+  Django memiliki sistem *permissions* dan *groups* yang bisa mengatur akses per pengguna. Misalnya, decorator `@login_required` atau `@permission_required` digunakan untuk membatasi akses pada view tertentu.
+
+---
+
+## 3. 🍪 Session vs Cookies dalam Menyimpan State
+
+**Cookies**: data kecil yang disimpan di sisi *client* (browser).  
+**Session**: data pengguna yang disimpan di server, sementara browser hanya menyimpan *session ID* di dalam cookies.
+
+### ⚡ Kelebihan Cookies:
+- 📦 Ringan dan tidak membebani server karena data disimpan di sisi client.
+- 🌐 Dapat digunakan lintas sesi browser (jika tidak dihapus).
+- 🔍 Mudah diakses dari sisi client untuk kebutuhan tertentu (misalnya *remember me*).
+
+### ⚠️ Kekurangan Cookies:
+- 🔓 Rentan dimanipulasi oleh pengguna jika tidak dienkripsi.
+- 📏 Ukuran terbatas (± 4 KB per cookie).
+- 🚫 Tidak cocok untuk menyimpan data sensitif.
+
+### ⚡ Kelebihan Session:
+- 🔒 Lebih aman karena data utama disimpan di server.
+- 📂 Mendukung penyimpanan data dalam jumlah lebih besar dibanding cookies.
+- 🔗 Django memiliki manajemen session bawaan yang terintegrasi.
+
+### ⚠️ Kekurangan Session:
+- 🖥️ Membebani server jika banyak pengguna aktif secara bersamaan.
+- 🍪 Tetap bergantung pada cookies (karena session ID disimpan di dalam cookie).
+
+---
+
+## 4. 🔐 Apakah Cookies Aman Secara Default?
+
+Penggunaan cookies **tidak sepenuhnya aman** secara default. Ada risiko yang perlu diperhatikan, seperti:
+- 🕵️ **Cookie theft (pencurian cookies)** melalui serangan XSS (*Cross-Site Scripting*).  
+- 🎭 **Session hijacking**: pencuri mengambil alih identitas pengguna melalui session ID.  
+- ✍️ **Manipulasi cookies**: data bisa diubah oleh client jika tidak dilindungi.  
+
+**Penanganan di Django:**
+- ✅ Opsi `HttpOnly` untuk mencegah akses cookie melalui JavaScript.  
+- ✅ Mendukung `Secure` flag agar cookies hanya dikirim melalui HTTPS.  
+- ✅ Mekanisme **CSRF protection** untuk mencegah serangan berbasis form.  
+- ✅ Konfigurasi `SESSION_COOKIE_AGE`, `SESSION_COOKIE_SECURE`, dan `SESSION_COOKIE_SAMESITE` di `settings.py` untuk meningkatkan keamanan.  
+
+---
+# 📋 Implementasi Autentikasi, Relasi User–Product, & Cookies
+
+## 1. Registrasi, Login, Logout
+- Membuat `register`, `login_user`, dan `logout_user` di `views.py`.
+- Menggunakan `UserCreationForm`/`AuthenticationForm` dan menyesuaikan tampilan dengan `home.html`.
+- Login menyimpan cookie `last_login`, logout menghapus cookie tersebut.
+
+## 2. Relasi User–Product
+- Tambahkan field `user = models.ForeignKey(User, on_delete=models.CASCADE)` pada model `Product`.
+- Pada view create, simpan `ent.user = request.user` sebelum `ent.save()`.
+
+## 3. Informasi User & Cookies
+- `home` menampilkan `request.user.username` dan cookie `last_login`.
+- Tambahkan tombol filter “All” dan “My” untuk membedakan item milik semua user atau hanya user yang login.
+
+## 4. Dummy Data
+- Registrasi 2 akun pengguna langsung melalui form `register`.
+- Login dengan masing-masing akun dan buat 3 data `Product` menggunakan form input yang sudah ada.
+- Dengan demikian, setiap akun memiliki 3 data dummy secara manual melalui antarmuka aplikasi.
+
+## 5. Penyesuaian Form
+- `login.html` dan `register.html` disusun dengan struktur dan class CSS yang konsisten dengan `home.html`.
+
+## 6. Verifikasi
+- Login → cek halaman utama menampilkan username dan `last_login`.
+- Tambah produk → otomatis terhubung dengan user.
+- Filter → tampil sesuai pemilik akun.
+- Logout → cookie `last_login` terhapus.
+
+---
+## 👩‍🏫 Feedback untuk asisten dosen Tutorial 3
+
+Pada saat sesi tutorial 3, saya juga tidak menemui kendala berarti. Materi yang disampaikan asisten dosen runtut dan mudah dipahami, sehingga saya dapat mengikuti alur praktik dengan baik. Penjelasan yang diberikan membantu saya memahami konsep baru sekaligus mempraktikkannya secara langsung, sehingga tugas yang diberikan pun dapat saya kerjakan dengan lebih lancar.
+
+---
+
 
