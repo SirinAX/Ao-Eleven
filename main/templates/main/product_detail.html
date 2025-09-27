@@ -1,24 +1,76 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="bg-blue-50 min-h-screen py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Back Button -->
+    <div class="mb-6">
+      <a
+        href="{% url 'main:home' %}"
+        class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors"
+      >
+        ← Kembali ke Home
+      </a>
+    </div>
 
-{% block content %}
-<h2>Detail Produk</h2>
-<p>Nama: {{ product.name }}</p>
-<p>Harga: Rp{{ product.price }}</p>
-<p>Deskripsi: {{ product.description }}</p>
+    <!-- Product Card -->
+    <div
+      class="bg-white rounded-lg shadow-lg border border-blue-100 overflow-hidden"
+    >
+      <!-- Header -->
+      <div class="p-6 sm:p-8">
+        <h1 class="text-3xl sm:text-4xl font-bold text-blue-900 mb-4">
+          {{ product.name }}
+        </h1>
 
-{% if product.thumbnail %}
-  <img src="{{ product.thumbnail }}" alt="{{ product.name }}" width="300">
-{% else %}
-  <p><i>Tidak ada gambar</i></p>
-{% endif %}
-<a href="{% url 'main:product_confirm_delete' product.pk %}">
-    <button type="button" style="background-color:red; color:white;">Hapus Produk</button>
-</a>
+        <p class="text-xl sm:text-2xl font-semibold text-blue-700 mb-2">
+          Harga: Rp{{ product.price }}
+        </p>
 
-{% if product.user %}
-    <p>Author: {{ product.user.username }}</p>
-{% else %}
-    <p>Author: Anonymous</p>
-{% endif %}
+        {% if product.owner %}
+        <p class="text-sm text-blue-600 mb-4">
+          Author: {{ product.owner.username }}
+        </p>
+        {% else %}
+        <p class="text-sm text-blue-600 mb-4">Author: Anonymous</p>
+        {% endif %}
 
-{% endblock %}
+        <p class="text-gray-700 leading-relaxed mb-4">
+          {{ product.description }}
+        </p>
+
+        <!-- Thumbnail -->
+        {% if product.thumbnail %}
+        <div class="mb-4">
+          <img
+            src="{{ product.thumbnail }}"
+            alt="{{ product.name }}"
+            class="w-full h-64 object-cover rounded-lg shadow-sm"
+          />
+        </div>
+        {% else %}
+        <p class="italic text-gray-500 mb-4">Tidak ada gambar</p>
+        {% endif %}
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4">
+          <a href="{% url 'main:product_confirm_delete' product.pk %}">
+            <button
+              type="button"
+              class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors"
+            >
+              Hapus Produk
+            </button>
+          </a>
+          <a href="{% url 'main:edit_product' product.pk %}">
+            <button
+              type="button"
+              class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+            >
+              Edit Produk
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

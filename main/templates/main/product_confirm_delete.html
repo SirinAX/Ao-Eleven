@@ -1,22 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="text-align: center; margin-top: 50px;">
-    <h2>Yakin mau hapus produk "<span style="color: #333;">{{ product.name }}</span>"?</h2>
+<div class="min-h-screen flex items-center justify-center bg-blue-50 px-4">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">
+            Yakin mau hapus produk 
+            <span class="text-red-600">"{{ product.name }}"</span>?
+        </h2>
 
-    <form method="POST" action="{% url 'main:product_delete' product.pk %}" style="margin-top: 30px;">
-        {% csrf_token %}
-        <button type="submit" 
-                style="background-color: red; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;">
-            Ya, Hapus
-        </button>
-        <a href="{% url 'main:product_detail' product.pk %}" 
-           style="margin-left: 15px; text-decoration: none;">
-            <button type="button" 
-                    style="background-color: gray; color: white; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 5px;">
-                Batal
+        <form method="POST" action="{% url 'main:product_delete' product.pk %}" class="flex justify-center gap-4">
+            {% csrf_token %}
+            <button type="submit" 
+                    class="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors">
+                Ya, Hapus
             </button>
-        </a>
-    </form>
+            <a href="{% url 'main:product_detail' product.pk %}">
+                <button type="button" 
+                        class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors">
+                    Batal
+                </button>
+            </a>
+        </form>
+    </div>
 </div>
-{% endblock %}
+{% endblock content %}

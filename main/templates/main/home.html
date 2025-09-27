@@ -3,48 +3,94 @@
 {% block title %}Home - {{ app_name }}{% endblock %}
 
 {% block content %}
-<h1 style="text-align: center; margin-top: 20px; font-family: Arial, sans-serif; color: #333;">
-  📦 Daftar Produk
-</h1>
-<hr style="width: 60%; margin: 10px auto; border: 1px solid #ddd;">
+{% include 'main/navbar.html' %}
 
-  <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
-    {% for product in products %}
-      <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; text-align: center; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        {% if product.thumbnail %}
-          <img src="{{ product.thumbnail }}" alt="{{ product.name }}" style="width: 100%; border-radius: 6px;">
-        {% else %}
-          <p><i>Tidak ada gambar</i></p>
-        {% endif %}
-        <h3 style="margin: 10px 0;">{{ product.name }}</h3>
-        <p style="font-weight: bold;">Rp{{ product.price }}</p>
-        <a href="{% url 'main:product_detail' product.id %}">
-          <button style="padding: 8px 12px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            Detail
-          </button>
+<div class="bg-blue-50 min-h-screen py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
+
+    <!-- White container untuk daftar produk -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">📦 Daftar Produk</h1>
+        <p class="text-gray-600 mt-2">Selamat datang, {{ user.username }}!</p>
+        <p class="text-gray-500 text-sm mt-1">Sesi terakhir login: {{ last_login }}</p>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="text-center mb-6 space-x-2">
+        <a href="?filter=all"
+           class="px-4 py-2 rounded-md border transition-colors duration-300
+                  {% if request.GET.filter == 'all' or not request.GET.filter %}bg-gray-300{% else %}bg-gray-100 hover:bg-gray-200{% endif %}">
+          All Product
+        </a>
+        <a href="?filter=my"
+           class="px-4 py-2 rounded-md border transition-colors duration-300
+                  {% if request.GET.filter == 'my' %}bg-gray-300{% else %}bg-gray-100 hover:bg-gray-200{% endif %}">
+          My Product
         </a>
       </div>
-    {% empty %}
-      <p>Belum ada produk</p>
-    {% endfor %}
-  </div>
 
-  <div style="text-align: center; margin-top: 20px;">
-    <a href="{% url 'main:product_add' %}">
-      <button style="padding: 10px 15px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
-        ➕ Add Product
-      </button>
-    </a>
-  </div>
-  <a href="{% url 'main:logout' %}">
-  <button>Logout</button>
-  </a>
-  <h5>Sesi terakhir login: {{ last_login }}</h5>
-  <a href="?filter=all">
-    <button type="button">All Product</button>
-  </a>
-  <a href="?filter=my">
-      <button type="button">My Product</button>
-  </a> 
+      <!-- Product Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {% for product in products %}
+        <div class="relative bg-gray-50 rounded-lg shadow-md p-4 flex flex-col items-center transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
 
+          <!-- Badge Kategori -->
+          <div class="absolute top-2 left-2 bg-yellow-400 text-white px-2 py-1 text-xs rounded-full font-semibold">
+            {{ product.category }}
+          </div>
+          {% if product.is_featured %}
+          <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 text-xs rounded-full font-semibold">
+            Featured
+          </div>
+          {% endif %}
+
+          <!-- Thumbnail -->
+          {% if product.thumbnail %}
+          <img src="{{ product.thumbnail }}" alt="{{ product.name }}"
+               class="rounded-md mb-4 w-full h-48 object-cover transition-transform duration-300 hover:scale-105 hover:brightness-110">
+          {% else %}
+          <div class="flex items-center justify-center w-full h-48 bg-gray-200 rounded-md text-gray-500 mb-4">
+            Tidak ada gambar
+          </div>
+          {% endif %}
+
+          <!-- Name & Price -->
+          <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ product.name }}</h3>
+          <p class="text-gray-700 font-medium mb-4">Rp{{ product.price }}</p>
+
+          <!-- Action Buttons -->
+          <div class="flex space-x-2 w-full">
+            <a href="{% url 'main:product_detail' product.id %}" 
+               class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md text-center transition-colors duration-300">
+              Detail
+            </a>
+            <a href="{% url 'main:edit_product' product.pk %}" 
+               class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-white py-2 rounded-md text-center transition-colors duration-300">
+              Edit
+            </a>
+          </div>
+        </div>
+        {% empty %}
+          <p class="col-span-full text-center text-gray-500 mt-4">Belum ada produk</p>
+        {% endfor %}
+      </div>
+
+      <!-- Add Product & Logout -->
+      <div class="flex justify-center mt-8 space-x-4">
+        <a href="{% url 'main:product_add' %}"
+           class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors duration-300">
+          ➕ Add Product
+        </a>
+        <a href="{% url 'main:logout' %}"
+           class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-300">
+          Logout
+        </a>
+      </div>
+
+    </div> <!-- End white container -->
+  </div>
+</div>
 {% endblock %}
