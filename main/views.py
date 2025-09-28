@@ -144,13 +144,18 @@ def logout_user(request):
 
 def edit_product(request, id):
     product = get_object_or_404(Product, pk=id)
-    form = ProductForm(request.POST or None, instance=product)
-    if form.is_valid() and request.method == 'POST':
-        form.save()
-        return redirect('main:home')
+
+    if request.method == "POST":
+        # kalau ada data form dikirim
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('main:home')
+    else:
+        # kalau cuma buka halaman edit pertama kali
+        form = ProductForm(instance=product)
 
     context = {
         'form': form
     }
-
     return render(request, "main/edit_product.html", context)
