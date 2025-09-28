@@ -30,9 +30,14 @@
   </div>
   {% endif %}
 
-  <!-- Name & Price -->
-  <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-1 text-center">{{ product.name }}</h3>
-  <p class="text-gray-700 font-medium mb-4 text-center">Rp{{ product.price }}</p>
+  <!-- Name & Price & Short Description -->
+  <h3 class="font-poppins text-lg sm:text-xl font-semibold text-gray-900 mb-1 text-center">{{ product.name }}</h3>
+  <p class="font-poppins text-gray-700 font-medium mb-2 text-center">Rp{{ product.price }}</p>
+  {% if product.description %}
+  <p class="font-poppins text-gray-500 text-sm text-center mb-4">
+    {{ product.description|slice:":50" }}{% if product.description|length > 50 %}...{% endif %}
+  </p>
+  {% endif %}
 
   <!-- Tombol Edit & Hapus -->
   <div class="flex space-x-2 w-full">
