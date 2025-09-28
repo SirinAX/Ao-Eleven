@@ -31,5 +31,25 @@
     &copy; {{ app_name }} — {{ student_name }} | PBP D
   </footer>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Cari semua tombol hamburger (biasanya 1)
+      document.querySelectorAll('.mobile-menu-button').forEach(btn => {
+        const menu = document.getElementById(btn.getAttribute('aria-controls') || 'mobile-menu') || document.querySelector('.mobile-menu');
+        if (!menu) return;
+
+        // Pastikan klik hanya dipasang sekali
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          menu.classList.toggle('hidden');
+
+          // update aria-expanded untuk aksesibilitas
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!expanded));
+        });
+      });
+    });
+  </script>
+
 </body>
 </html>
