@@ -2,12 +2,16 @@
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
 
-      <!-- Logo -->
-      <div class="flex-shrink-0">
-        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">
-          <span class="text-blue-600">Ao</span>Eleven
-        </h1>
-      </div>
+<!-- Logo + Brand -->
+<div class="flex items-center space-x-2 flex-shrink-0">
+  <img src="https://i.pinimg.com/736x/83/b3/2c/83b32c711df202d4f6b0323b1fcb8f73.jpg" 
+       alt="Logo" 
+       class="h-10 w-10 rounded-full object-cover">
+  <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">
+    <span class="text-blue-600">Ao</span>Eleven
+  </h1>
+</div>
+
 
       <!-- Desktop Links -->
       <div class="hidden md:flex items-center space-x-8">
@@ -20,7 +24,7 @@
         {% if user.is_authenticated %}
           <div class="text-right">
             <div class="text-sm font-medium text-gray-900">{{ name|default:user.username }}</div>
-            <div class="text-xs text-gray-500">{{ student_name }} - PBP D</div>
+            <div class="text-xs text-gray-500">{{ 2406495792 }} - PBP D</div>
           </div>
           <a href="{% url 'main:logout' %}" class="text-red-600 hover:text-red-700 font-medium transition-colors">Logout</a>
         {% else %}
