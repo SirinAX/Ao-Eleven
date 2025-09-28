@@ -8,6 +8,7 @@ class Product(models.Model):
         ('sepatu', 'Sepatu'),
         ('bola', 'Bola'),
         ('aksesoris', 'Aksesoris'),
+        ('random', 'Random')
     ]
 
     name = models.CharField(max_length=100)

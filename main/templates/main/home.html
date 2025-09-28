@@ -1,14 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block title %}Home - {{ app_name }}{% endblock %}
 
 {% block content %}
-{% include 'main/navbar.html' %}
-
 <div class="bg-blue-50 min-h-screen py-8">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 space-y-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 space-y-8">
 
     <!-- White box: Header -->
     <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col min-h-[150px]">
@@ -16,7 +13,7 @@
         <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">📦 Daftar Produk</h1>
         <p class="text-gray-600 mt-2">Selamat datang, {{ user.username }}!</p>
       </div>
-      <!-- Sesi terakhir login kiri bawah -->
+      <!-- Sesi terakhir login -->
       <div class="text-left text-gray-500 text-sm mt-auto">
         Sesi terakhir login: {{ last_login }}
       </div>
@@ -40,79 +37,28 @@
       </div>
 
       <!-- Product Grid -->
+      {% if products %}
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
         {% for product in products %}
-        <div class="relative bg-gray-50 rounded-xl shadow-md p-4 flex flex-col items-center group transition-transform duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-1 cursor-pointer"
-             onclick='window.location.href="{% url "main:product_detail" product.id %}"'>
-
-          <!-- Badge Kategori -->
-          <div class="absolute top-3 left-3 bg-yellow-400 text-white px-3 py-1 text-xs rounded-full font-semibold z-20 shadow-sm">
-            {{ product.category }}
-          </div>
-
-          <!-- Badge Featured -->
-          {% if product.is_featured %}
-          <div class="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 text-xs rounded-full font-semibold animate-pulse z-20 shadow-sm">
-            Featured
-          </div>
-          {% endif %}
-
-          <!-- Thumbnail dengan overlay -->
-          {% if product.thumbnail %}
-          <div class="relative w-full h-48 rounded-lg overflow-hidden mb-4 shadow-sm">
-            <img src="{{ product.thumbnail }}" alt="{{ product.name }}"
-                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-            <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-bold text-sm sm:text-base rounded-lg">
-              Klik untuk lihat detail
-            </div>
-          </div>
-          {% else %}
-          <div class="flex items-center justify-center w-full h-48 bg-gray-200 rounded-lg text-gray-500 mb-4">
-            Tidak ada gambar
-          </div>
-          {% endif %}
-
-          <!-- Name & Price -->
-          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-1 text-center">{{ product.name }}</h3>
-          <p class="text-gray-700 font-medium mb-4 text-center">Rp{{ product.price }}</p>
-
-          <!-- Tombol Edit & Hapus -->
-          <div class="flex space-x-2 w-full">
-            <a href="{% url 'main:edit_product' product.pk %}" 
-               onclick="event.stopPropagation();"
-               class="flex-1 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-white py-2 rounded-md text-center transition-all duration-300 transform hover:scale-105">
-              Edit
-            </a>
-            <a href="{% url 'main:product_confirm_delete' product.pk %}" 
-               onclick="event.stopPropagation();"
-               class="flex-1">
-              <button type="button"
-                      class="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-md transition-all duration-300 transform hover:scale-105">
-                Hapus
-              </button>
-            </a>
-          </div>
-
+          {% include "main/card_product.html" with product=product %}
+        {% endfor %}
+      </div>
+      {% else %}
+      <!-- Jika produk kosong -->
+      <div class="col-span-full bg-white rounded-lg border border-gray-200 p-12 text-center">
+        <div class="w-32 h-32 mx-auto mb-4">
+          <img src="{% static 'image/no-product.png' %}" alt="No product available" class="w-full h-full object-contain">
         </div>
-{% empty %}
-  <div class="col-span-full bg-white rounded-lg border border-gray-200 p-12 text-center">
-    <div class="w-32 h-32 mx-auto mb-4">
-      <img src="{% static 'image/no-product.png' %}" alt="No product available" class="w-full h-full object-contain">
-    </div>
-    <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada produk</h3>
-    <p class="text-gray-500 mb-6">Mulai tambahkan produk pertamamu agar muncul di sini.</p>
-  </div>
-{% endfor %}
-
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Belum ada produk</h3>
+        <p class="text-gray-500 mb-6">Mulai tambahkan produk pertamamu agar muncul di sini.</p>
+        <div class="flex justify-center mt-8 space-x-4">
+          <a href="{% url 'main:product_add' %}"
+             class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors duration-300">
+            ➕ Add Product
+          </a>
+        </div>
       </div>
-
-      <!-- Add Product & Logout -->
-      <div class="flex justify-center mt-8 space-x-4">
-        <a href="{% url 'main:product_add' %}"
-           class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-md transition-colors duration-300">
-          ➕ Add Product
-        </a>
-      </div>
+      {% endif %}
 
     </div>
   </div>
