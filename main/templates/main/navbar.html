@@ -20,7 +20,7 @@
         {% if user.is_authenticated %}
           <div class="text-right">
             <div class="text-sm font-medium text-gray-900">{{ name|default:user.username }}</div>
-            <div class="text-xs text-gray-500">{{ student_name }} - 2406495792</div>
+            <div class="text-xs text-gray-500">{{ student_name }} - PBP D</div>
           </div>
           <a href="{% url 'main:logout' %}" class="text-red-600 hover:text-red-700 font-medium transition-colors">Logout</a>
         {% else %}
@@ -31,7 +31,7 @@
 
       <!-- Mobile Menu Button -->
       <div class="md:hidden flex items-center">
-        <button type="button" class="mobile-menu-button p-2 text-gray-600 hover:text-gray-900 transition-colors relative z-50">
+        <button type="button" class="mobile-menu-button p-2 text-gray-600 hover:text-gray-900 transition-colors z-[999]">
           <span class="sr-only">Open menu</span>
           <div class="w-6 h-6 flex flex-col justify-center items-center">
             <span class="bg-current block h-0.5 w-6 rounded-sm"></span>
@@ -45,7 +45,7 @@
   </div>
 
   <!-- Mobile Menu -->
-  <div class="mobile-menu hidden md:hidden bg-white border-t border-gray-200">
+  <div class="mobile-menu hidden md:hidden absolute top-16 left-0 w-full bg-white border-t border-gray-200 z-40">
     <div class="px-6 py-4 space-y-4">
       <a href="/" class="block text-gray-600 hover:text-gray-900 font-medium py-3 transition-colors">Home</a>
       <a href="{% url 'main:product_add' %}" class="block text-gray-600 hover:text-gray-900 font-medium py-3 transition-colors">Add Product</a>
