@@ -1,80 +1,55 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block body_style %}
+  style="background-image: url('{% static 'image/inidia.jpg' %}');
+         background-size: cover;
+         background-position: center;
+         background-repeat: no-repeat;
+         background-attachment: fixed;"
+{% endblock body_style %}
+
 {% block content %}
-<div class="bg-blue-50 min-h-screen py-8">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen py-12 flex items-center justify-center">
+  <div class="max-w-7xl w-full px-4 sm:px-6 lg:px-8">
+
     <!-- Back Button -->
     <div class="mb-6">
-      <a
-        href="{% url 'main:home' %}"
-        class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors"
-      >
+      <a href="{% url 'main:home' %}" 
+         class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors">
         ← Kembali ke Home
       </a>
     </div>
 
     <!-- Product Card -->
-    <div class="bg-white rounded-lg shadow-lg border border-blue-100 overflow-hidden">
-      <div class="p-6 sm:p-8 flex flex-col sm:flex-row gap-6">
-        
+    <div class="bg-white rounded-xl shadow-xl border border-blue-100 overflow-hidden w-full">
+      <div class="flex flex-col sm:flex-row gap-6">
+
         <!-- Thumbnail -->
         {% if product.thumbnail %}
         <div class="flex-shrink-0 w-full sm:w-1/2">
-          <img
-            src="{{ product.thumbnail }}"
-            alt="{{ product.name }}"
-            class="w-full h-64 sm:h-full object-cover rounded-lg shadow-sm"
-          />
+          <img src="{{ product.thumbnail }}" 
+               alt="{{ product.name }}" 
+               class="w-full h-auto object-contain rounded-lg shadow-md"/>
         </div>
         {% endif %}
 
         <!-- Product Info -->
-        <div class="flex-1 flex flex-col justify-between">
+        <div class="flex-1 flex flex-col justify-between p-6 sm:p-8">
           <div>
-            <h1 class="text-3xl sm:text-4xl font-bold text-blue-900 mb-2">
-              {{ product.name }}
-            </h1>
-
-            <p class="text-xl sm:text-2xl font-semibold text-blue-700 mb-2">
-              Harga: Rp{{ product.price }}
-            </p>
-
+            <h1 class="text-3xl sm:text-4xl font-bold text-blue-900 mb-2">{{ product.name }}</h1>
+            <p class="text-2xl sm:text-3xl font-semibold text-blue-700 mb-2">Harga: Rp{{ product.price }}</p>
             {% if product.owner %}
-            <p class="text-sm text-blue-600 mb-4">
-              Author: {{ product.owner.username }}
-            </p>
+              <p class="text-sm text-blue-600 mb-4">Author: {{ product.owner.username }}</p>
             {% else %}
-            <p class="text-sm text-blue-600 mb-4">Author: Anonymous</p>
+              <p class="text-sm text-blue-600 mb-4">Author: Anonymous</p>
             {% endif %}
-
-            <p class="text-gray-700 leading-relaxed mb-4">
-              {{ product.description }}
-            </p>
+            <p class="text-gray-700 leading-relaxed mb-4">{{ product.description }}</p>
           </div>
-
-          <!-- Action Buttons -->
-          <div class="flex gap-4 mt-4 sm:mt-auto">
-            <a href="{% url 'main:product_confirm_delete' product.pk %}">
-              <button
-                type="button"
-                class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors w-full"
-              >
-                Hapus Produk
-              </button>
-            </a>
-            <a href="{% url 'main:edit_product' product.pk %}">
-              <button
-                type="button"
-                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors w-full"
-              >
-                Edit Produk
-              </button>
-            </a>
-          </div>
-
         </div>
       </div>
     </div>
+
   </div>
 </div>
 {% endblock content %}

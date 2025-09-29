@@ -11,13 +11,13 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body class="bg-blue-50 font-roboto">
-
+<body class="font-roboto {% block body_class %}{% endblock body_class %}"
+      {% block body_style %}{% endblock body_style %}>
 
   <!-- Navbar -->
   {% include 'main/navbar.html' %}
@@ -32,19 +32,15 @@
     &copy; {{ app_name }} — {{ student_name }} | PBP D
   </footer>
 
-    <script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Cari semua tombol hamburger (biasanya 1)
+      // Toggle mobile menu
       document.querySelectorAll('.mobile-menu-button').forEach(btn => {
         const menu = document.getElementById(btn.getAttribute('aria-controls') || 'mobile-menu') || document.querySelector('.mobile-menu');
         if (!menu) return;
-
-        // Pastikan klik hanya dipasang sekali
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           menu.classList.toggle('hidden');
-
-          // update aria-expanded untuk aksesibilitas
           const expanded = btn.getAttribute('aria-expanded') === 'true';
           btn.setAttribute('aria-expanded', String(!expanded));
         });

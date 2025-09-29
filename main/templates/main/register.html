@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block meta %}
 <title>Register - Ao Eleven</title>
 {% endblock meta %}
+{% block body_style %}
+  style="background-image: url('{% static 'image/inidia.jpg' %}');
+         background-size: cover;
+         background-position: center;
+         background-repeat: no-repeat;
+         background-attachment: fixed;"
+{% endblock body_style %}
 
 {% block content %}
 <div class="form-style">
-<div class="bg-blue-50 min-h-screen py-8 flex items-center justify-center">
+<div class="min-h-screen py-8 flex items-center justify-center">
     <div class="max-w-md w-full relative z-10">
       <div class="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
       <div class="text-center mb-8">

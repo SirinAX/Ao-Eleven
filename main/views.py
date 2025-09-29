@@ -59,6 +59,7 @@ def product_confirm_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     context = {
         "product": product,
+        "next": request.GET.get("next", reverse("main:home")),
     }
     return render(request, "main/product_confirm_delete.html", context)
 

@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block meta %}
 <title>Login - Ao Eleven</title>
 {% endblock meta %}
+{% block body_style %}
+  style="background-image: url('{% static 'image/inidia.jpg' %}');
+         background-size: cover;
+         background-position: center;
+         background-repeat: no-repeat;
+         background-attachment: fixed;"
+{% endblock body_style %}
 
 {% block content %}
   <div class="max-w-md w-full mx-auto">

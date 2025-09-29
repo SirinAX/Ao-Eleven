@@ -4,10 +4,17 @@
 {% block meta %}
 <title>Edit Product - Ao Eleven</title>
 {% endblock meta %}
+{% block body_style %}
+  style="background-image: url('{% static 'image/inidia.jpg' %}');
+         background-size: cover;
+         background-position: center;
+         background-repeat: no-repeat;
+         background-attachment: fixed;"
+{% endblock body_style %}
 
 {% block content %}
-<div class="bg-blue-50 min-h-screen py-8">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="min-h-screen py-8 flex items-center justify-center">
+<div class="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     <!-- Back Navigation -->
     <div class="mb-6">
