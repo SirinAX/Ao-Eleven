@@ -39,8 +39,9 @@
   </p>
   {% endif %}
 
-  <!-- Tombol Edit & Hapus -->
-  <div class="flex space-x-2 w-full">
+  <!-- Tombol Edit & Hapus (hanya untuk pemilik produk) -->
+  {% if product.owner == request.user %}
+  <div class="flex space-x-2 w-full mt-2">
     <a href="{% url 'main:edit_product' product.pk %}" 
        onclick="event.stopPropagation();"
        class="flex-1 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-white py-2 rounded-md text-center transition-all duration-300 transform hover:scale-105">
@@ -55,4 +56,5 @@
       </button>
     </a>
   </div>
+  {% endif %}
 </div>
