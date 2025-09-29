@@ -40,7 +40,7 @@
   {% endif %}
 
   <!-- Tombol Edit & Hapus -->
-  {% if user.is_authenticated and (user == product.owner or user.is_staff) %}
+  {% if user.is_authenticated and user == product.owner or user.is_staff %}
     <div class="flex space-x-2 w-full">
       <a href="{% url 'main:edit_product' product.pk %}" 
          onclick="event.stopPropagation();"
