@@ -366,4 +366,172 @@ Pada saat sesi tutorial 3, saya juga tidak menemui kendala berarti. Materi yang 
 
 ---
 
+# 🌐 TUGAS 5 — Desain Web menggunakan HTML, CSS, dan Framework CSS
+
+---
+
+## 🎨 Urutan Prioritas CSS Selector
+
+Ketika ada banyak selector yang mengatur satu elemen, browser menentukan **siapa yang menang** berdasarkan spesifisitas & urutan.
+
+Urutan prioritas:
+
+1. 🚨 **`!important`** → *tertinggi*, override semua (hindari kecuali sangat perlu).
+2. 🎯 **Inline style** → `style="..."` langsung di elemen.
+3. 🆔 **ID selector** → `#idku`.
+4. 🏷️ **Class / attribute / pseudo-class** → `.classku`, `[type="text"]`, `:hover`.
+5. 📄 **Element / pseudo-element** → `div`, `p`, `::after`.
+6. ⏳ Jika sama → aturan yang muncul **terakhir** akan dipakai (cascade).
+
+**Contoh:**
+
+```css
+button { color: blue; }       /* element */
+.btn { color: green; }        /* class */
+#submitBtn { color: red; }    /* id */
+```
+
+```html
+<button id="submitBtn" class="btn" style="color: purple">Klik Aku</button>
+```
+
+➡️ Hasil: warna **ungu**, karena inline style menang. Kalau ada `!important`, itu akan override semuanya.
+
+---
+
+## 📱 Pentingnya Responsive Design
+
+Kenapa harus responsive?
+
+* 📏 **Ukuran layar beragam**: HP, tablet, laptop, desktop.
+* 😀 **User experience**: lebih nyaman, gampang navigasi.
+* 🔎 **SEO friendly**: Google lebih suka website mobile-friendly.
+* 🛠️ **Lebih mudah maintenance**: satu codebase untuk semua device.
+* ♿ **Aksesibilitas**: teks terbaca, tombol gampang ditekan.
+
+**Contoh aplikasi responsive:**
+Google, Wikipedia, Twitter, Tokopedia → tampilan otomatis menyesuaikan device.
+
+---
+
+## 📦 Margin, Border, dan Padding
+
+**Box model CSS**:
+
+```
+margin → border → padding → content
+```
+
+* 🔲 **Margin** → ruang luar, pisahkan elemen dengan elemen lain.
+* 🖼️ **Border** → garis di sekeliling padding & content.
+* 🧩 **Padding** → ruang dalam antara konten dan border.
+
+**Tips modern:**
+Gunakan `box-sizing: border-box;` → width/height sudah termasuk border & padding → lebih gampang atur layout.
+
+**Contoh:**
+
+```css
+.card {
+  margin: 16px;             /* ruang luar */
+  border: 1px solid #ddd;   /* garis */
+  padding: 12px;            /* ruang dalam */
+  width: 280px;             /* total width termasuk padding & border */
+  box-sizing: border-box;
+}
+```
+
+⚠️ Catatan: margin vertikal antar block bisa *collapse* → hanya margin terbesar yang berlaku.
+
+---
+
+## 🔀 Flexbox vs Grid
+
+### 📌 Flexbox (1D layout)
+
+* Fokus ke **satu dimensi**: baris *atau* kolom.
+* Cocok untuk: navbar, bar tombol, card row.
+* Properti utama:
+
+  * Container: `display: flex; flex-direction; justify-content; align-items; gap;`
+  * Item: `flex-grow; flex-shrink; align-self;`
+
+**Contoh:**
+
+```css
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+```
+
+---
+
+### 🗂️ Grid (2D layout)
+
+* Fokus ke **dua dimensi**: baris *dan* kolom.
+* Cocok untuk: gallery, dashboard, grid produk.
+* Properti utama:
+
+  * Container: `display: grid; grid-template-columns; grid-template-rows; gap;`
+  * Item: `grid-column; grid-row;`
+
+**Contoh:**
+
+```css
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+```
+
+📍 **Kapan pakai apa?**
+
+* Susunan linear sederhana → Flexbox.
+* Layout kompleks baris + kolom → Grid.
+
+---
+
+## 📝 Alur Implementasi Checklist Tugas 5
+
+1. 🔧 **Fitur Edit & Delete Produk**
+
+   * Tambah fungsi `edit_product` & `delete_product` di `views.py`.
+   * Tambah routing di `urls.py`.
+   * Buat template `edit_product.html`.
+   * Tambah tombol **Edit** & **Delete** di card produk → hanya muncul untuk **owner** atau **superuser**.
+
+2. 🎨 **Kustomisasi Tampilan**
+
+   * Tambah Tailwind CDN di `base.html`.
+   * Atur layout dasar dengan **flexbox** & **grid**.
+
+3. 🖼️ **Styling Halaman**
+
+   * Login, Register, Tambah Produk, Edit Produk, Detail Produk, Home.
+   * Semua dibuat **responsif** + seragam (warna, tombol interaktif, card rapi).
+
+4. 📋 **Daftar Produk**
+
+   * Jika kosong → tampilkan pesan *“Belum ada produk yang terdaftar”*.
+   * Jika ada → tampilkan card grid (gambar, deskripsi, tombol Detail/Edit/Delete).
+
+5. 🧭 **Navbar Responsif**
+
+   * Buat `navbar.html` → include di semua halaman.
+   * Isi: Home, Add Product, Login/Logout/Register.
+   * Tambah menu hamburger untuk mobile.
+
+6. 📂 **Static Files**
+
+   * Konfigurasi WhiteNoise di `settings.py`.
+   * Supaya CSS & file statis tetap ter-load dengan baik saat deploy.
+
+✅ Hasil akhir: semua halaman **rapi, konsisten, responsif, dan interaktif** 🎉
+
+---
+
+
 
