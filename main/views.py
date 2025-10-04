@@ -150,31 +150,40 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({"success": True})
             messages.success(request, 'Your account has been successfully created!')
             return redirect('main:login')
+        else:
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                # kumpulin error sebagai string
+                errors = [f"{field}: {','.join(err_list)}" 
+                          for field, err_list in form.errors.items()]
+                return JsonResponse({"success": False, "error": " | ".join(errors)})
     context = {"form": form}
     return render(request, "main/register.html", context)
-
-
+@csrf_exempt
 def login_user(request):
     if request.method == "POST":
-        form = AuthenticationForm(data=request.POST)
-
-        if form.is_valid():
-            user = form.get_user()
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
             login(request, user)
-            response = HttpResponseRedirect(reverse("main:home"))
+            response = JsonResponse({"success": True})
             response.set_cookie("last_login", str(datetime.datetime.now()))
             return response
-    else:
-        form = AuthenticationForm(request)
-
-    context = {"form": form}
-    return render(request, "main/login.html", context)
+        else:
+            return JsonResponse({"success": False, "error": "Username atau password salah"})
+    return render(request, "main/login.html")
 
 
+
+@csrf_exempt
 def logout_user(request):
     logout(request)
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({"success": True})
     response = HttpResponseRedirect(reverse("main:login"))
     response.delete_cookie("last_login")
     return response

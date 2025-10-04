@@ -47,7 +47,7 @@
       {% endif %}
 
       <!-- Login Form -->
-      <form method="POST" action="" class="space-y-6">
+      <form id="login-form"class="space-y-6">
         {% csrf_token %}
 
         <!-- Username -->
@@ -107,6 +107,39 @@
       </div>
 
     </div>
+    <div id="toast-component" class="fixed bottom-4 right-4 px-4 py-3 rounded shadow opacity-0 translate-y-64 transition-all duration-300">
+    <strong id="toast-title" class="block font-semibold mb-1"></strong>
+    <span id="toast-message"></span>
+</div>
+
   </div>
+  <script>
+document.addEventListener('DOMContentLoaded', function(){
+    const form = document.getElementById('login-form');
+    form.addEventListener('submit', function(e){
+        e.preventDefault(); // cegah reload page
+
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const formData = new FormData(form);
+
+        fetch("{% url 'main:login' %}", {
+            method: "POST",
+            headers: { 'X-CSRFToken': csrfToken },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success){
+                showToast("Login Berhasil", "Selamat datang!", "success");
+                setTimeout(()=> window.location.href="{% url 'main:home' %}", 1000);
+            } else {
+                showToast("Login Gagal", data.error || "Username atau password salah", "error");
+            }
+        })
+        .catch(err => showToast("Error", "Terjadi kesalahan server", "error"));
+    });
+});
+</script>
+
 </div>
 {% endblock content %}

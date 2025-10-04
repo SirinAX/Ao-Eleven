@@ -26,7 +26,7 @@
             <div class="text-sm font-medium text-gray-900">{{ name|default:user.username }}</div>
             <div class="text-xs text-gray-500">{{ 2406495792 }} - PBP D</div>
           </div>
-          <a href="{% url 'main:logout' %}" class="text-red-600 hover:text-red-700 font-medium transition-colors">Logout</a>
+<a href="#" id="logout-btn" class="text-red-600 hover:text-red-700 font-medium transition-colors">Logout</a>
         {% else %}
           <a href="{% url 'main:login' %}" class="text-gray-600 hover:text-gray-900 font-medium transition-colors">Login</a>
           <a href="{% url 'main:register' %}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-medium transition-colors">Register</a>
@@ -73,5 +73,37 @@
         </div>
       {% endif %}
     </div>
+    <div id="toast-component" class="fixed bottom-4 right-4 px-4 py-3 rounded shadow opacity-0 translate-y-64 transition-all duration-300">
+    <strong id="toast-title" class="block font-semibold mb-1"></strong>
+    <span id="toast-message"></span>
+</div>
+
   </div>
+  <script>
+document.addEventListener('DOMContentLoaded', function(){
+    const logoutBtn = document.getElementById('logout-btn');
+    if(logoutBtn){
+        logoutBtn.addEventListener('click', function(e){
+            e.preventDefault(); // cegah reload page
+            fetch("{% url 'main:logout' %}", {
+                method: "POST",
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(res => {
+                if(res.ok){
+                    showToast("Logout Berhasil", "Sampai jumpa lagi!", "success");
+                    setTimeout(() => window.location.href = "{% url 'main:login' %}", 1200);
+                } else {
+                    showToast("Logout Gagal", "Terjadi kesalahan server", "error");
+                }
+            })
+            .catch(err => showToast("Error", "Terjadi kesalahan jaringan", "error"));
+        });
+    }
+});
+</script>
+
 </nav>

@@ -96,18 +96,13 @@
 
     </div>
   </div>
-</div>
-{% endblock content %}
-
-<script>
+  <script>
 document.addEventListener("DOMContentLoaded", function() {
   const refreshBtn = document.getElementById("refresh-products");
   const productList = document.getElementById("product-list");
 
   refreshBtn.addEventListener("click", function() {
     productList.innerHTML = '<p class="text-center w-full py-6">Loading...</p>';
-
-    // Pasti URL dievaluasi oleh Django
     fetch("{% url 'main:products_list_ajax' %}?filter=all")
       .then(response => {
         if (!response.ok) throw new Error("Failed to fetch products");
@@ -123,3 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 </script>
+
+</div>
+{% endblock content %}
+

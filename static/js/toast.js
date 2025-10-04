@@ -9,16 +9,20 @@ function showToast(title, message, type = 'normal', duration = 3000) {
     toastComponent.classList.remove(
         'bg-red-50', 'border-red-500', 'text-red-600',
         'bg-green-50', 'border-green-500', 'text-green-600',
+        'bg-blue-50', 'border-blue-500', 'text-blue-600', // <-- tambahan
         'bg-white', 'border-gray-300', 'text-gray-800'
     );
 
-    // Set type styles and icon
+    // Set type styles
     if (type === 'success') {
         toastComponent.classList.add('bg-green-50', 'border-green-500', 'text-green-600');
         toastComponent.style.border = '1px solid #22c55e';
     } else if (type === 'error') {
         toastComponent.classList.add('bg-red-50', 'border-red-500', 'text-red-600');
         toastComponent.style.border = '1px solid #ef4444';
+    } else if (type === 'info') {       // <-- baru
+        toastComponent.classList.add('bg-blue-50', 'border-blue-500', 'text-blue-600');
+        toastComponent.style.border = '1px solid #3b82f6';
     } else {
         toastComponent.classList.add('bg-white', 'border-gray-300', 'text-gray-800');
         toastComponent.style.border = '1px solid #d1d5db';
