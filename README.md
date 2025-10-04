@@ -532,6 +532,61 @@ Gunakan `box-sizing: border-box;` → width/height sudah termasuk border & paddi
 ✅ Hasil akhir: semua halaman **rapi, konsisten, responsif, dan interaktif** 🎉
 
 ---
+#  TUGAS 6 — Javascript dan AJAX
+---
 
+## 🔄 1. Synchronous vs Asynchronous
 
+* **Synchronous (cara lama)**
+
+  * Request dikirim → tunggu server → halaman reload full.
+  * Contoh: submit form → langsung pindah atau reload halaman.
+* **Asynchronous (AJAX)**
+
+  * Request jalan di background → halaman tetap di tempat.
+  * Server balikin data (biasanya JSON) → langsung update bagian tertentu.
+  * Contoh: klik tombol “Like” → angka like nambah, tanpa refresh.
+
+---
+
+## 🛠 2. Alur AJAX di Django
+
+1. User klik tombol / isi form.
+2. JavaScript (`fetch`, `axios`, dll) kirim request ke URL Django.
+3. Django `views.py` proses data → balikin `JsonResponse`.
+4. JavaScript terima response → update tampilan (DOM).
+
+➡️ Intinya: **user → JS → Django → JSON → JS update DOM**
+
+---
+
+## ⚡ 3. Kenapa Pake AJAX?
+
+* Lebih **cepat** karena nggak reload full page.
+* Lebih **hemat** (cuma kirim/terima data penting).
+* Lebih **interaktif** dan terasa modern.
+* Bisa bikin fitur real-time kayak chat, live search, notifikasi.
+
+---
+
+## 🔒 4. Keamanan Login & Register
+
+Kalau main di fitur sensitif, jangan lupa:
+
+* Sertakan **CSRF Token** di tiap request.
+* Pakai **HTTPS** biar data login aman.
+* **Validasi di server tetap wajib**, jangan cuma di JS.
+* Jangan kasih pesan error yang terlalu detail.
+* Kalau perlu, tambahin **rate limiting** biar brute force susah.
+
+---
+
+## 🎨 5. Dampak ke User Experience
+
+* User ngerasa web **lebih ringan & responsif**.
+* Interaksi jadi **seamless**, nggak keganggu reload.
+* Bikin web berasa kayak **aplikasi mobile/desktop**.
+* Tapi kalau AJAX error **tanpa feedback**, user bisa bingung.
+
+---
 
