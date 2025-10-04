@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from main.views import register,login_user,logout_user
 from main.views import edit_product
-
+from main.views import add_product_ajax
 app_name = "main"
 
 urlpatterns = [
@@ -16,6 +16,9 @@ urlpatterns = [
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
     path("news/<int:id>/edit", views.edit_product, name="edit_product"),
+     path('create-product-ajax/', add_product_ajax, name='add_product_ajax'),
+     path('products/list/ajax/', views.products_list_ajax, name='products_list_ajax'),
+    
     
 
     # Export JSON/XML

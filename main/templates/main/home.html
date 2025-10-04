@@ -4,7 +4,7 @@
 {% block title %}Home - {{ app_name }}{% endblock %}
 
 {% block body_style %}
-  style="background-image: url('{% static 'image/inidia.jpg' %}');
+  style="background-image: url('{% static 'image/amerikue.jpeg' %}');
          background-size: cover;
          background-position: center;
          background-repeat: no-repeat;
@@ -15,6 +15,16 @@
 <div class="min-h-screen py-8 relative">
 
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+    <!-- Button Add Product by AJAX -->
+    <div class="flex justify-left mb-6">
+      <button onclick="showModal()"
+              class="px-6 py-3 bg-white text-blue-600 font-semibold 
+                     border-2 border-blue-600 rounded-md shadow-md
+                     hover:bg-blue-600 hover:text-white transition-colors">
+        ➕ Add Product by AJAX
+      </button>
+    </div>
 
     <!-- Header Box -->
     <div class="bg-white/90 rounded-xl shadow-lg p-6 flex flex-col min-h-[150px]">
@@ -31,8 +41,8 @@
     <div class="bg-white/90 rounded-xl shadow-lg p-6 flex flex-col space-y-6
                 bg-[repeating-linear-gradient(90deg,#e5e7eb,#e5e7eb 1px,transparent 1px,transparent 20px)]">
 
-      <!-- Filter Buttons -->
-      <div class="text-center mb-6 space-x-3">
+      <!-- Filter Buttons + Refresh -->
+      <div class="flex justify-center items-center mb-4 gap-3">
         <a href="?filter=all"
            class="px-5 py-2 rounded-full font-medium text-white transition-all duration-300
                   {% if request.GET.filter == 'all' or not request.GET.filter %}
@@ -51,11 +61,18 @@
                   {% endif %}">
           My Product
         </a>
+
+        <!-- Tombol Refresh -->
+        <button id="refresh-products" 
+                class="px-4 py-2 bg-green-600 text-white font-semibold rounded-md 
+                       shadow-md hover:bg-green-700 transition-colors">
+          🔄 Refresh
+        </button>
       </div>
 
       <!-- Product Grid -->
       {% if products %}
-      <div class="flex flex-wrap justify-center gap-6 relative z-10">
+      <div id="product-list" class="flex flex-wrap justify-center gap-6 relative z-10">
         {% for product in products %}
           <div class="bg-white rounded-xl shadow-md p-4 flex flex-col items-center w-64">
             {% include "main/card_product.html" with product=product %}
@@ -81,3 +98,28 @@
   </div>
 </div>
 {% endblock content %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const refreshBtn = document.getElementById("refresh-products");
+  const productList = document.getElementById("product-list");
+
+  refreshBtn.addEventListener("click", function() {
+    productList.innerHTML = '<p class="text-center w-full py-6">Loading...</p>';
+
+    // Pasti URL dievaluasi oleh Django
+    fetch("{% url 'main:products_list_ajax' %}?filter=all")
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to fetch products");
+        return response.json();
+      })
+      .then(data => {
+        productList.innerHTML = data.html; 
+      })
+      .catch(error => {
+        productList.innerHTML = '<p class="text-center w-full py-6 text-red-600">Error loading products</p>';
+        console.error(error);
+      });
+  });
+});
+</script>

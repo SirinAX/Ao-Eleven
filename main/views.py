@@ -10,6 +10,10 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 @login_required(login_url='/login')
@@ -74,8 +78,41 @@ def product_delete(request, pk):
 
 # --- JSON/XML Views ---
 def products_json(request):
-    data = serializers.serialize("json", Product.objects.all())
-    return HttpResponse(data, content_type="application/json")
+    filter_type = request.GET.get("filter", "all")
+
+    if filter_type == "all":
+        products = Product.objects.all()
+    else:
+        products = Product.objects.filter(owner=request.user)
+
+    data = [
+        {
+            'id': product.id,
+            'name': product.name,
+            'description': product.description,
+            'price': float(product.price) if product.price else 0,
+            'owner_id': product.owner.id,
+            'owner_username': product.owner.username,
+            'created_at': product.created_at.isoformat() if hasattr(product, 'created_at') else None,
+        }
+        for product in products
+    ]
+    return JsonResponse(data, safe=False)
+
+
+def products_list_ajax(request):
+    filter_type = request.GET.get("filter", "all")
+
+    if filter_type == "all":
+        products = Product.objects.all()
+    else:
+        products = Product.objects.filter(owner=request.user)
+
+    html = ""
+    for product in products:
+        html += render_to_string("main/card_product.html", {"product": product, "user": request.user})
+
+    return JsonResponse({"html": html})
 
 
 def products_xml(request):
@@ -160,3 +197,28 @@ def edit_product(request, id):
         'form': form
     }
     return render(request, "main/edit_product.html", context)
+
+@csrf_exempt
+@require_POST
+def add_product_ajax(request):
+    form = ProductForm(request.POST, request.FILES)
+    if form.is_valid():
+        product = form.save(commit=False)
+        product.owner = request.user
+        product.save()
+
+        # render card_product.html sebagai string HTML
+        product_html = render_to_string("main/card_product.html", {
+            "product": product,
+            "user": request.user,
+        })
+
+        return JsonResponse({
+            "success": True,
+            "html": product_html,
+        })
+    else:
+        # Tambahkan ini untuk debugging
+        print("FORM ERRORS:", form.errors)  # <-- ini akan tampil di terminal
+        return JsonResponse({"success": False, "error": "Invalid form"}, status=400)
+
