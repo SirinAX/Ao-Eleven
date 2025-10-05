@@ -62,19 +62,21 @@ style="background-image: url('{% static 'image/amerikue.jpeg' %}');
         </button>
       </div>
 
-      <!-- Product Grid -->
-      <div id="product-list" class="flex flex-wrap justify-center gap-6 relative z-10">
-        {% if products %}
-          {% for product in products %}
-            <div class="bg-white rounded-xl shadow-md p-4 flex flex-col items-center w-64"
-                 id="product-{{ product.id }}">
-              {% include "main/card_product.html" with product=product %}
-            </div>
-          {% endfor %}
-        {% else %}
-          <p class="text-center w-full py-6 text-gray-500">No products available.</p>
-        {% endif %}
-      </div>
+        <!-- Product Grid -->
+        <div id="product-list" class="flex flex-wrap justify-center gap-6 relative z-10">
+          {% if products %}
+              {% for product in products %}
+                  {% include "main/card_product.html" with product=product %}
+              {% endfor %}
+          {% else %}
+              <div class="flex flex-col items-center justify-center w-full py-6 text-gray-500">
+                <img src="{% static 'image/download.jpeg' %}" alt="No products" class="w-48 h-48 mb-4 object-contain">
+                <p class="text-lg font-medium">Belum ada produk 😔</p>
+                <p class="text-sm mt-2 text-gray-400">Tambahkan produk kamu ya!</p>
+              </div>
+          {% endif %}
+        </div>
+
     </div>
   </div>
   <!-- =========================

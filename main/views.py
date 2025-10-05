@@ -66,11 +66,6 @@ def delete_product_ajax(request, pk):
     Endpoint ini hanya menerima POST request.
     """
     product = get_object_or_404(Product, pk=pk)
-
-    # Pastikan hanya owner yang bisa hapus
-    if product.owner != request.user:
-        return JsonResponse({"success": False, "error": "Kamu tidak punya izin untuk menghapus produk ini."}, status=403)
-
     try:
         product.delete()
         return JsonResponse({"success": True, "id": pk})
