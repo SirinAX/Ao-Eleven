@@ -58,23 +58,24 @@ def product_add(request):
     }
     return render(request, "main/add_product.html", context)
 
-
-def product_confirm_delete(request, pk):
+@login_required(login_url='/login')
+@require_POST
+def delete_product_ajax(request, pk):
+    """
+    Menghapus product via AJAX.
+    Endpoint ini hanya menerima POST request.
+    """
     product = get_object_or_404(Product, pk=pk)
-    context = {
-        "product": product,
-        "next": request.GET.get("next", reverse("main:home")),
-    }
-    return render(request, "main/product_confirm_delete.html", context)
 
+    # Pastikan hanya owner yang bisa hapus
+    if product.owner != request.user:
+        return JsonResponse({"success": False, "error": "Kamu tidak punya izin untuk menghapus produk ini."}, status=403)
 
-def product_delete(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    if request.method == "POST":
+    try:
         product.delete()
-        return redirect("main:home")
-    return redirect("main:product_detail", pk=pk)
-
+        return JsonResponse({"success": True, "id": pk})
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)}, status=500)
 
 # --- JSON/XML Views ---
 def products_json(request):
@@ -162,21 +163,28 @@ def register(request):
                 return JsonResponse({"success": False, "error": " | ".join(errors)})
     context = {"form": form}
     return render(request, "main/register.html", context)
+
+# ---------- LOGIN ----------
 @csrf_exempt
 def login_user(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get("username")
+        password = request.POST.get("password")
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             login(request, user)
             response = JsonResponse({"success": True})
             response.set_cookie("last_login", str(datetime.datetime.now()))
             return response
         else:
-            return JsonResponse({"success": False, "error": "Username atau password salah"})
-    return render(request, "main/login.html")
+            return JsonResponse({
+                "success": False,
+                "error": "Username atau password salah"
+            }, status=400)
 
+    # kalau GET -> tampilkan halaman login
+    return render(request, "main/login.html")
 
 
 @csrf_exempt
@@ -188,24 +196,19 @@ def logout_user(request):
     response.delete_cookie("last_login")
     return response
 
-
-def edit_product(request, id):
-    product = get_object_or_404(Product, pk=id)
-
-    if request.method == "POST":
-        # kalau ada data form dikirim
-        form = ProductForm(request.POST, instance=product)
+@login_required(login_url='/login')
+@require_POST
+def edit_product_ajax(request, pk):
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        product = get_object_or_404(Product, pk=pk)
+        form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('main:home')
-    else:
-        # kalau cuma buka halaman edit pertama kali
-        form = ProductForm(instance=product)
-
-    context = {
-        'form': form
-    }
-    return render(request, "main/edit_product.html", context)
+            html = render_to_string("main/card_product.html", {"product": product, "user": request.user})
+            return JsonResponse({"success": True, "html": html})
+        else:
+            return JsonResponse({"success": False, "error": form.errors.as_json()})
+    return JsonResponse({"success": False, "error": "Invalid request"})
 
 @csrf_exempt
 @require_POST

@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from main.views import register,login_user,logout_user
-from main.views import edit_product
+from main.views import edit_product_ajax
 from main.views import add_product_ajax
 app_name = "main"
 
@@ -9,13 +9,12 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('products/add/', views.product_add, name='product_add'),
     path('products/<int:pk>/', views.product_detail, name='product_detail'),
-    path('products/<int:pk>/delete/', views.product_delete, name='product_delete'),
-    path('product/<int:pk>/confirm_delete/', views.product_confirm_delete, name='product_confirm_delete'),
+    path('delete-product/<int:pk>/', views.delete_product_ajax, name='delete_product_ajax'),
     path('add-employee/',views.add_employee,name = 'add_employee'),
     path('register/', register, name='register'),
     path('login/', login_user, name='login'),
     path('logout/', logout_user, name='logout'),
-    path("news/<int:id>/edit", views.edit_product, name="edit_product"),
+path('edit-product-ajax/<int:pk>/', views.edit_product_ajax, name='edit_product_ajax'),
      path('create-product-ajax/', add_product_ajax, name='add_product_ajax'),
      path('products/list/ajax/', views.products_list_ajax, name='products_list_ajax'),
     

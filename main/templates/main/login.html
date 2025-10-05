@@ -107,39 +107,40 @@
       </div>
 
     </div>
-    <div id="toast-component" class="fixed bottom-4 right-4 px-4 py-3 rounded shadow opacity-0 translate-y-64 transition-all duration-300">
-    <strong id="toast-title" class="block font-semibold mb-1"></strong>
-    <span id="toast-message"></span>
-</div>
-
   </div>
-  <script>
-document.addEventListener('DOMContentLoaded', function(){
-    const form = document.getElementById('login-form');
-    form.addEventListener('submit', function(e){
-        e.preventDefault(); // cegah reload page
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("login-form");
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-        const formData = new FormData(form);
+    const csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+    const formData = new FormData(form);
 
-        fetch("{% url 'main:login' %}", {
-            method: "POST",
-            headers: { 'X-CSRFToken': csrfToken },
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(data.success){
-                showToast("Login Berhasil", "Selamat datang!", "success");
-                setTimeout(()=> window.location.href="{% url 'main:home' %}", 1000);
-            } else {
-                showToast("Login Gagal", data.error || "Username atau password salah", "error");
-            }
-        })
-        .catch(err => showToast("Error", "Terjadi kesalahan server", "error"));
+    fetch("{% url 'main:login' %}", {
+      method: "POST",
+      headers: { "X-CSRFToken": csrfToken },
+      body: formData
+    })
+    .then(res => {
+      console.log("Status:", res.status);
+      console.log("Content-Type:", res.headers.get("content-type"));
+      return res.json();
+    })
+    .then(data => {
+      if (data.success) {
+        showToast("Login Berhasil", "Selamat datang!", "success");
+        setTimeout(() => window.location.href="{% url 'main:home' %}", 1000);
+      } else {
+        showToast("Login Gagal", data.error, "error");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      showToast("Error", "Server error", "error");
     });
+  });
 });
 </script>
-
 </div>
 {% endblock content %}

@@ -1,8 +1,9 @@
 {% load static %}
 {% load humanize %}
 
-<div class="relative bg-gray-50 rounded-xl shadow-md p-4 flex flex-col items-center group transition-transform duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-1 cursor-pointer"
-     onclick='window.location.href="{% url "main:product_detail" product.id %}"'>
+<div id="product-{{ product.id }}"
+     class="relative bg-gray-50 rounded-xl shadow-md p-4 flex flex-col items-center group transition-transform duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-1 cursor-pointer"
+     onclick="window.location.href='{% url 'main:product_detail' product.id %}'">
 
   <!-- Badge Kategori -->
   <div class="absolute top-3 left-3 bg-yellow-400 text-white px-3 py-1 text-xs rounded-full font-semibold z-20 shadow-sm">
@@ -16,7 +17,7 @@
   </div>
   {% endif %}
 
-  <!-- Thumbnail dengan overlay -->
+  <!-- Thumbnail -->
   {% if product.thumbnail %}
   <div class="relative w-full h-48 rounded-lg overflow-hidden mb-4 shadow-sm">
     <img src="{{ product.thumbnail }}" alt="{{ product.name }}"
@@ -31,7 +32,7 @@
   </div>
   {% endif %}
 
-  <!-- Name & Price & Short Description -->
+  <!-- Nama, Harga & Deskripsi Singkat -->
   <h3 class="font-poppins text-lg sm:text-xl font-semibold text-gray-900 mb-1 text-center">{{ product.name }}</h3>
   <p class="font-poppins text-gray-700 font-medium mb-2 text-center">Rp{{ product.price|intcomma }}</p>
   {% if product.description %}
@@ -42,20 +43,29 @@
 
   <!-- Tombol Edit & Hapus -->
   {% if user.is_authenticated and user == product.owner or user.is_staff %}
-    <div class="flex space-x-2 w-full">
-      <a href="{% url 'main:edit_product' product.pk %}" 
-         onclick="event.stopPropagation();"
-         class="flex-1 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-white py-2 rounded-md text-center transition-all duration-300 transform hover:scale-105">
-        Edit
-      </a>
-      <a href="{% url 'main:product_confirm_delete' product.pk %}" 
-         onclick="event.stopPropagation();"
-         class="flex-1">
-        <button type="button"
-                class="w-full px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-md transition-all duration-300 transform hover:scale-105">
-          Hapus
-        </button>
-      </a>
-    </div>
+  <div class="flex space-x-2 w-full">
+    <!-- Edit AJAX -->
+    <button type="button"
+            onclick='event.stopPropagation(); showModal(true, {
+              id: {{ product.id }},
+              name: "{{ product.name|escapejs }}",
+              price: {{ product.price }},
+              stock: {{ product.stock }},
+              description: "{{ product.description|escapejs }}",
+              category: "{{ product.category|escapejs }}",
+              thumbnail: "{{ product.thumbnail|escapejs }}",
+              is_featured: {{ product.is_featured|yesno:"true,false" }}
+            })'
+            class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 flex-1">
+      Edit
+    </button>
+    <!-- Hapus AJAX -->
+    <button type="button"
+            onclick="event.stopPropagation(); showDeleteModal({{ product.id }})"
+            class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 flex-1">
+      Hapus
+    </button>
+  </div>
   {% endif %}
+
 </div>

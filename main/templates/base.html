@@ -18,10 +18,10 @@
 </head>
 <body class="font-roboto {% block body_class %}{% endblock body_class %}"
       {% block body_style %}{% endblock body_style %}>
+            {% include 'toast.html' %}
 
   <!-- Navbar -->
   {% include 'main/navbar.html' %}
-      {% include 'toast.html' %}
       {% include 'modal.html' %}
 
   <!-- Main Content -->
@@ -49,6 +49,5 @@
       });
     });
   </script>
-
 </body>
 </html>
