@@ -62,88 +62,18 @@ style="background-image: url('{% static 'image/amerikue.jpeg' %}');
         </button>
       </div>
 
-        <!-- Product Grid -->
-        <div id="product-list" class="flex flex-wrap justify-center gap-6 relative z-10">
-          {% if products %}
-              {% for product in products %}
-                  {% include "main/card_product.html" with product=product %}
-              {% endfor %}
-          {% else %}
-              <div class="flex flex-col items-center justify-center w-full py-6 text-gray-500">
-                <img src="{% static 'image/download.jpeg' %}" alt="No products" class="w-48 h-48 mb-4 object-contain">
-                <p class="text-lg font-medium">Belum ada produk 😔</p>
-                <p class="text-sm mt-2 text-gray-400">Tambahkan produk kamu ya!</p>
-              </div>
-          {% endif %}
-        </div>
+      <!-- Product Grid -->
+      <div id="product-list" data-ajax-url="{% url 'main:products_list_ajax' %}" class="flex flex-wrap justify-center gap-6 relative z-10">
+        {% if products %}
+          {% for product in products %}
+            {% include "main/card_product.html" with product=product %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <script src="{% static 'js/modal.js' %}"></script>
 
     </div>
   </div>
-  <!-- =========================
-       AJAX & DOM SCRIPT
-  ========================= -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const refreshBtn = document.getElementById("refresh-products");
-      const productList = document.getElementById("product-list");
-      const submitBtn = document.getElementById("submitProduct");
-
-      // 🔹 Refresh Products
-      refreshBtn.addEventListener("click", function() {
-        productList.innerHTML = '<p class="text-center w-full py-6">Loading...</p>';
-        fetch("{% url 'main:products_list_ajax' %}?filter=all")
-          .then(res => res.ok ? res.json() : Promise.reject("Failed to fetch"))
-          .then(data => {
-            productList.innerHTML = data.html || '<p class="text-center w-full py-6 text-gray-500">No products available.</p>';
-          })
-          .catch(err => {
-            productList.innerHTML = '<p class="text-center w-full py-6 text-red-600">Error loading products</p>';
-            console.error(err);
-          });
-      });
-
-      // 🔹 AJAX Submit Create / Edit
-      document.getElementById("productForm")?.addEventListener("submit", async function(e){
-        e.preventDefault();
-        const formData = new FormData(this);
-        const productId = formData.get("id");
-        const url = productId ? `/edit-product-ajax/${productId}/` : "{% url 'main:add_product_ajax' %}";
-
-        // Button loading
-        submitBtn.disabled = true;
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = "Saving...";
-
-        try {
-          const res = await fetch(url,{
-            method:"POST",
-            body: formData,
-            headers: {"X-Requested-With":"XMLHttpRequest","X-CSRFToken":csrftoken}
-          });
-          const data = await res.json();
-
-          if(data.success){
-            if(productId){
-              const card = document.getElementById(`product-${productId}`);
-              if(card) card.outerHTML = data.html;
-              showToast("Product updated!","success");
-            } else {
-              productList.insertAdjacentHTML("beforeend", data.html);
-              showToast("Product added!","success");
-            }
-            hideModal();
-          } else {
-            showToast("Failed! "+(data.error||""),"error");
-          }
-        } catch(err) {
-          console.error(err);
-          showToast("Error submitting product","error");
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-        }
-      });
-    });
-  </script>
 </div>
 {% endblock content %}

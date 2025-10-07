@@ -1,8 +1,7 @@
 {% load static %}
 {% load humanize %}
 
-<div id="product-{{ product.id }}"
-     class="relative bg-gray-50 rounded-xl shadow-md p-4 flex flex-col items-center group transition-transform duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-1 cursor-pointer"
+<div id="product-{{ product.id }}" class="product-card relative bg-gray-50 rounded-xl shadow-md p-4 flex flex-col items-center group transition-transform duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-1 cursor-pointer"
      onclick="window.location.href='{% url 'main:product_detail' product.id %}'">
 
   <!-- Badge Kategori -->
@@ -54,6 +53,8 @@
               description: "{{ product.description|escapejs }}",
               category: "{{ product.category|escapejs }}",
               thumbnail: "{{ product.thumbnail|escapejs }}",
+              brand: "{{ product.brand|default_if_none:''|escapejs }}",
+              rating: {{ product.rating|default_if_none:0 }},
               is_featured: {{ product.is_featured|yesno:"true,false" }}
             })'
             class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 flex-1">
