@@ -17,14 +17,15 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>`;
   }
 
-  function showEmptyState() {
-    productList.innerHTML = `
-      <div class="flex flex-col items-center justify-center w-full py-10 text-gray-500">
-        <img src="/static/image/download.jpeg" alt="Empty" class="w-40 h-40 mb-3 object-contain">
-        <p class="text-lg font-semibold">Belum ada produk 😔</p>
-        <p class="text-sm text-gray-400">Tambahkan produk baru yuk!</p>
-      </div>`;
-  }
+function showEmptyState() {
+  productList.innerHTML = `
+    <div class="flex flex-col items-center justify-center w-full py-10 text-gray-500">
+      <img src="/static/image/empty.gif" alt="Belum ada produk" class="w-40 h-40 mb-3 object-contain">
+      <p class="text-lg font-semibold">Belum ada produk </p>
+      <p class="text-sm text-gray-400">Tambahkan produk baru kamu hmph!</p>
+    </div>`;
+}
+
 
   function showErrorState() {
     productList.innerHTML = `

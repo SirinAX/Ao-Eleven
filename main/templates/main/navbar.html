@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function(){
             })
             .then(res => {
                 if(res.ok){
-                    showToast("Logout Berhasil", "Sampai jumpa lagi!", "success");
+                    showToast("Logout Berhasil", "Sampai jumpa lagi👋!", "success");
                     setTimeout(() => window.location.href = "{% url 'main:login' %}", 1200);
                 } else {
                     showToast("Logout Gagal", "Terjadi kesalahan server", "error");
