@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from main.views import register,login_user,logout_user
 from main.views import edit_product_ajax
-from main.views import add_product_ajax
+from main.views import add_product_ajax,proxy_image,create_product_flutter
 app_name = "main"
 
 urlpatterns = [
@@ -17,6 +17,8 @@ urlpatterns = [
 path('edit-product-ajax/<int:pk>/', views.edit_product_ajax, name='edit_product_ajax'),
      path('create-product-ajax/', add_product_ajax, name='add_product_ajax'),
      path('products/list/ajax/', views.products_list_ajax, name='products_list_ajax'),
+      path('proxy-image/', proxy_image, name='proxy_image'),
+      path('create-flutter/', create_product_flutter, name='create_product_flutter'),
     
     
 

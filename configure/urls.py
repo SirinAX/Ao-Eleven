@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls', namespace="main")),
+    path('auth/', include('authentication.urls')),
+
 ]
 
 # untuk development: media

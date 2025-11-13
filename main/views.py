@@ -14,6 +14,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+import requests
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.html import strip_tags
+import json
+from django.http import JsonResponse
 
 
 @login_required(login_url='/login')
@@ -71,8 +76,7 @@ def delete_product_ajax(request, pk):
         return JsonResponse({"success": True, "id": pk})
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=500)
-
-# --- JSON/XML Views ---
+    
 def products_json(request):
     filter_type = request.GET.get("filter", "all")
 
@@ -81,20 +85,25 @@ def products_json(request):
     else:
         products = Product.objects.filter(owner=request.user)
 
-    data = [
-        {
-            'id': product.id,
-            'name': product.name,
-            'description': product.description,
-            'price': float(product.price) if product.price else 0,
-            'owner_id': product.owner.id,
-            'owner_username': product.owner.username,
-            'created_at': product.created_at.isoformat() if hasattr(product, 'created_at') else None,
-        }
-        for product in products
-    ]
+    data = []
+    for product in products:
+        data.append({
+            "id": product.id,
+            "name": product.name,
+            "description": product.description,
+            "price": float(product.price) if product.price else 0,
+            "stock": product.stock,
+            "thumbnail": product.thumbnail,  # ✅ ambil langsung dari URLField
+            "category": product.category,
+            "is_featured": product.is_featured,
+            "brand": product.brand,
+            "rating": float(product.rating),
+            "url": request.build_absolute_uri(reverse("main:product_detail", args=[product.id])),
+            "owner_id": product.owner.id,
+            "owner_username": product.owner.username,
+            "created_at": product.created_at.isoformat(),
+        })
     return JsonResponse(data, safe=False)
-
 
 def products_list_ajax(request):
     filter_type = request.GET.get("filter", "all")
@@ -118,8 +127,24 @@ def products_xml(request):
 
 def product_json(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    data = serializers.serialize("json", [product])
-    return HttpResponse(data, content_type="application/json")
+    data = {
+        "id": product.id,
+        "name": product.name,
+        "description": product.description,
+        "price": float(product.price) if product.price else 0,
+        "stock": product.stock,
+        "thumbnail": product.thumbnail,
+        "category": product.category,
+        "is_featured": product.is_featured,
+        "brand": product.brand,
+        "rating": float(product.rating),
+        "url": request.build_absolute_uri(reverse("main:product_detail", args=[product.id])),
+        "owner_id": product.owner.id,
+        "owner_username": product.owner.username,
+        "created_at": product.created_at.isoformat(),
+    }
+    return JsonResponse(data)
+
 
 
 def product_xml(request, pk):
@@ -229,3 +254,59 @@ def add_product_ajax(request):
         print("FORM ERRORS:", form.errors)  # <-- ini akan tampil di terminal
         return JsonResponse({"success": False, "error": "Invalid form"}, status=400)
 
+def proxy_image(request):
+    image_url = request.GET.get('url')
+    if not image_url:
+        return HttpResponse('No URL provided', status=400)
+    
+    try:
+        # Fetch image from external source
+        response = requests.get(image_url, timeout=10)
+        response.raise_for_status()
+        
+        # Return the image with proper content type
+        return HttpResponse(
+            response.content,
+            content_type=response.headers.get('Content-Type', 'image/jpeg')
+        )
+    except requests.RequestException as e:
+        return HttpResponse(f'Error fetching image: {str(e)}', status=500)
+    
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        new_product = Product(
+            name=strip_tags(data.get("name", "")),
+            description=strip_tags(data.get("description", "")),
+            category=data.get("category", ""),
+            thumbnail=data.get("thumbnail", ""),
+            is_featured=data.get("is_featured", False),
+            price=data.get("price", 0),
+            stock=data.get("stock", 0),
+            brand=data.get("brand", ""),
+            rating=data.get("rating", 0),
+            owner=request.user
+        )
+        new_product.save()
+
+        return JsonResponse({
+            "status": "success",
+            "product": {
+                "id": new_product.id,
+                "name": new_product.name,
+                "price": new_product.price,
+                "description": new_product.description,
+                "thumbnail": new_product.thumbnail,
+                "category": new_product.category,
+                "is_featured": new_product.is_featured,
+                "stock": new_product.stock,
+                "brand": new_product.brand,
+                "rating": float(new_product.rating),
+                "owner": new_product.owner.username,
+                "created_at": new_product.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+            }
+        }, status=200)
+
+    return JsonResponse({"status": "error"}, status=401)
